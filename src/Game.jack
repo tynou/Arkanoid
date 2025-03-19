@@ -1,0 +1,30 @@
+class Game
+{
+    field Platform _platform;
+
+    constructor Game new()
+    {
+        let _platform = Platform.new();
+        do _platform.draw();
+        return this;
+    }
+
+    method void run()
+    {
+        var char curKey;
+        while (true)
+        {
+            let curKey = Keyboard.keyPressed();
+            if (curKey = 130)
+            {
+                do _platform.move(-4);
+            }
+            if (curKey = 132)
+            {
+                do _platform.move(4);
+            }
+            do Sys.wait(5);
+        }
+        return;
+    }
+}

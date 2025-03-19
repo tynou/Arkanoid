@@ -1,0 +1,9 @@
+class Fraction
+{
+    constructor Fraction new()
+    {
+		
+        
+		return this;
+	}
+}

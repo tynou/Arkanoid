@@ -1,0 +1,8 @@
+class Ball
+{
+    constructor Ball new()
+    {
+
+        return this;
+    }
+}

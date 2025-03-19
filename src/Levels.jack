@@ -1,0 +1,24 @@
+class Levels
+{
+    function Levels getLevel(int id)
+    {
+        return Levels.level1();
+    }
+
+    function Level level1()
+    {
+        var Array stringArray;
+        var Level level;
+
+        let stringArray = Array.new(5);
+        let stringArray[0] = "##########";
+        let stringArray[1] = "####  ####";
+        let stringArray[2] = "###    ###";
+        let stringArray[3] = "##      ##";
+        let stringArray[4] = "#        #";
+
+        let level = Level.new(stringArray, 10, 5);
+        do stringArray.dispose();
+        return level;
+    }
+}

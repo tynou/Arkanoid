@@ -1,0 +1,34 @@
+class Main
+{
+	static Game game;
+
+	function void main()
+	{
+        do Main.waitForInput("Arkanoid");
+
+        let game = Game.new();
+        do game.run();
+
+		return;
+	}
+
+	function void waitForInput(String message) {
+        var int textX;
+        var char key;
+
+        let textX = 32 - (message.length() / 2);
+        
+        do Screen.clearScreen();
+        do Output.moveCursor(9, textX);
+        do Output.printString(message);
+        do Output.moveCursor(11, 21);
+        do Output.printString("Press any key to continue");
+        
+        while (~(key = 32)) {
+            let key = Keyboard.keyPressed();
+        }
+
+        do Screen.clearScreen();
+        return;
+    }
+}
