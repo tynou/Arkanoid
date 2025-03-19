@@ -1,8 +1,68 @@
 class Ball
 {
-    constructor Ball new()
-    {
+    field int x;
+    field int y;
+    field int sx;
+    field int sy;
+    field int dx;
+    field int dy;
 
+    constructor Ball new(int startX, int startY, int startDX, int startDY)
+    {
+        let x = startX;
+        let y = startY;
+        let dx = startDX;
+        let dy = startDY;
+        let sx = 8;
+        let sy = 8;
         return this;
+    }
+
+    method void clear()
+    {
+        do Screen.setColor(false);
+        do Screen.drawRectangle(x, y, x + sx, y + sy);
+        return;
+    }
+
+    method void draw()
+    {
+        do Screen.setColor(true);
+        do Screen.drawRectangle(x, y, x + sx, y + sy);
+        return;
+    }
+
+    method void step(Platform platform)
+    {
+        var int maxX;
+        var int maxY;
+
+        var int xBound;
+        var int yBound;
+        let xBound = platform.getX() + platform.getSX();
+        let yBound = platform.getY() - sy - 1;
+
+        do clear();
+        let x = Math.max(Math.min(x + dx, 512 - 1 - sx), 0);
+        let maxX = 512 - 1 - sx;
+        if ((x = maxX) | (x = 0))
+        {
+            let dx = -dx;
+        }
+        let y = Math.max(Math.min(y + dy, 256 - 1 - sy), 0);
+        let maxY = 256 - 1 - sy;
+        if ((y = maxY) | (y = 0))
+        {
+            let dy = -dy;
+        }
+
+        if ((y = yBound) & (x > platform.getX()) & (x < xBound))
+        {
+            let dy = -dy;
+        }
+
+        do draw();
+
+        return;
     }
 }

@@ -25,6 +25,9 @@ class Platform
     {
         do Screen.setColor(true);
         do Screen.drawRectangle(x, y, x + sx, y + sy);
+
+        do Screen.setColor(false);
+        do Screen.drawRectangle(x + 2, y + 2, x + sx - 2, y + sy - 2);
         return;
     }
 
@@ -34,5 +37,20 @@ class Platform
         let x = Math.max(Math.min(x + dir, 512 - 1 - sx), 0);
         do draw();
         return;
+    }
+
+    method int getX()
+    {
+        return x;
+    }
+
+    method int getY()
+    {
+        return y;
+    }
+
+    method int getSX()
+    {
+        return sx;
     }
 }

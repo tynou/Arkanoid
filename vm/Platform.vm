@@ -52,6 +52,27 @@ add
 call Screen.drawRectangle 4
 pop temp 0
 push constant 0
+call Screen.setColor 1
+pop temp 0
+push this 0
+push constant 2
+add
+push this 1
+push constant 2
+add
+push this 0
+push this 2
+add
+push constant 2
+sub
+push this 1
+push this 3
+add
+push constant 2
+sub
+call Screen.drawRectangle 4
+pop temp 0
+push constant 0
 return
 function Platform.move 0
 push argument 0
@@ -75,4 +96,19 @@ push pointer 0
 call Platform.draw 1
 pop temp 0
 push constant 0
+return
+function Platform.getX 0
+push argument 0
+pop pointer 0
+push this 0
+return
+function Platform.getY 0
+push argument 0
+pop pointer 0
+push this 1
+return
+function Platform.getSX 0
+push argument 0
+pop pointer 0
+push this 2
 return

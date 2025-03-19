@@ -1,0 +1,162 @@
+function Ball.new 0
+push constant 6
+call Memory.alloc 1
+pop pointer 0
+push argument 0
+pop this 0
+push argument 1
+pop this 1
+push argument 2
+pop this 4
+push argument 3
+pop this 5
+push constant 8
+pop this 2
+push constant 8
+pop this 3
+push pointer 0
+return
+function Ball.clear 0
+push argument 0
+pop pointer 0
+push constant 0
+call Screen.setColor 1
+pop temp 0
+push this 0
+push this 1
+push this 0
+push this 2
+add
+push this 1
+push this 3
+add
+call Screen.drawRectangle 4
+pop temp 0
+push constant 0
+return
+function Ball.draw 0
+push argument 0
+pop pointer 0
+push constant 0
+not
+call Screen.setColor 1
+pop temp 0
+push this 0
+push this 1
+push this 0
+push this 2
+add
+push this 1
+push this 3
+add
+call Screen.drawRectangle 4
+pop temp 0
+push constant 0
+return
+function Ball.step 4
+push argument 0
+pop pointer 0
+push argument 1
+call Platform.getX 1
+push argument 1
+call Platform.getSX 1
+add
+pop local 2
+push argument 1
+call Platform.getY 1
+push this 3
+sub
+push constant 1
+sub
+pop local 3
+push pointer 0
+call Ball.clear 1
+pop temp 0
+push this 0
+push this 4
+add
+push constant 512
+push constant 1
+sub
+push this 2
+sub
+call Math.min 2
+push constant 0
+call Math.max 2
+pop this 0
+push constant 512
+push constant 1
+sub
+push this 2
+sub
+pop local 0
+push this 0
+push local 0
+eq
+push this 0
+push constant 0
+eq
+or
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push this 4
+neg
+pop this 4
+label IF_FALSE0
+push this 1
+push this 5
+add
+push constant 256
+push constant 1
+sub
+push this 3
+sub
+call Math.min 2
+push constant 0
+call Math.max 2
+pop this 1
+push constant 256
+push constant 1
+sub
+push this 3
+sub
+pop local 1
+push this 1
+push local 1
+eq
+push this 1
+push constant 0
+eq
+or
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push this 5
+neg
+pop this 5
+label IF_FALSE1
+push this 1
+push local 3
+eq
+push this 0
+push argument 1
+call Platform.getX 1
+gt
+and
+push this 0
+push local 2
+lt
+and
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+push this 5
+neg
+pop this 5
+label IF_FALSE2
+push pointer 0
+call Ball.draw 1
+pop temp 0
+push constant 0
+return

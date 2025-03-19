@@ -1,11 +1,14 @@
 class Game
 {
     field Platform _platform;
+    field Ball _ball;
 
     constructor Game new()
     {
         let _platform = Platform.new();
+        let _ball = Ball.new(10, 10, 1, 1);
         do _platform.draw();
+        do _ball.draw();
         return this;
     }
 
@@ -17,12 +20,15 @@ class Game
             let curKey = Keyboard.keyPressed();
             if (curKey = 130)
             {
-                do _platform.move(-4);
+                do _platform.move(-2);
             }
             if (curKey = 132)
             {
-                do _platform.move(4);
+                do _platform.move(2);
             }
+
+            do _ball.step(_platform);
+
             do Sys.wait(5);
         }
         return;

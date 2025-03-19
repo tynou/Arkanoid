@@ -1,11 +1,20 @@
 function Game.new 0
-push constant 1
+push constant 2
 call Memory.alloc 1
 pop pointer 0
 call Platform.new 0
 pop this 0
+push constant 10
+push constant 10
+push constant 1
+push constant 1
+call Ball.new 4
+pop this 1
 push this 0
 call Platform.draw 1
+pop temp 0
+push this 1
+call Ball.draw 1
 pop temp 0
 push pointer 0
 return
@@ -26,7 +35,7 @@ if-goto IF_TRUE0
 goto IF_FALSE0
 label IF_TRUE0
 push this 0
-push constant 4
+push constant 2
 neg
 call Platform.move 2
 pop temp 0
@@ -38,10 +47,14 @@ if-goto IF_TRUE1
 goto IF_FALSE1
 label IF_TRUE1
 push this 0
-push constant 4
+push constant 2
 call Platform.move 2
 pop temp 0
 label IF_FALSE1
+push this 1
+push this 0
+call Ball.step 2
+pop temp 0
 push constant 5
 call Sys.wait 1
 pop temp 0
