@@ -1,0 +1,12 @@
+CHIP CPU {
+    IN instruction[16], inM, reset;
+    OUT outM, writeM, addressM, pc[16];
+
+    PARTS:
+	PC(in=aRegisterOut, reset=reset, inc=instruction[15], out=pc);
+	ALU(x=dRegisterOut, y=muxOut2, out=outM, out=outALU);
+	Mux16(a=outALU, b=instruction, sel=instruction[15], out=muxOut1);
+	ARegister(in=muxOut1, load=instruction[15], out=addressM, out=aRegisterOut);
+	Mux16(a=aRegisterOut, b=inM, sel=instruction[15], out=muxOut2);
+	DRegister(in=outALU, load=instruction[15], out=dRegisterOut);
+}

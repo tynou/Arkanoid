@@ -1,4 +1,15 @@
 class Block
 {
-    
+    constructor Block new()
+    {
+
+    }
+
+    function Block parse(char blockChar)
+    {
+        if (blockChar = 35) // '#'
+        {
+            return wall;
+        }
+    }
 }

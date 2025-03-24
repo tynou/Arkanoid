@@ -1,34 +1,76 @@
 class Ball
 {
-    field int x;
-    field int y;
-    field int sx;
-    field int sy;
-    field int dx;
-    field int dy;
+    // field int _x;
+    // field int _y;
+    field Float _x;
+    field Float _y;
+    field int _sx;
+    field int _sy;
+    // field int _dx;
+    // field int _dy;
+    field Float _dx;
+    field Float _dy;
+    
+    field int _lastCollision;
 
-    constructor Ball new(int startX, int startY, int startDX, int startDY)
+    field Game _game;
+
+    constructor Ball new(int startX, int startY, int startDX, int startDY, Game game)
     {
-        let x = startX;
-        let y = startY;
-        let dx = startDX;
-        let dy = startDY;
-        let sx = 8;
-        let sy = 8;
+        // let _x = startX;
+        // let _y = startY;
+        let _x = Float.new(1, startX, 0);
+        let _y = Float.new(1, startY, 0);
+        // let _dx = startDX;
+        // let _dy = startDY;
+        let _dx = Float.new(1, 0, 44);
+        let _dy = Float.new(-1, 0, 89);
+        let _sx = 8;
+        let _sy = 8;
+
+        let _game = game;
         return this;
     }
 
     method void clear()
     {
-        do Screen.setColor(false);
-        do Screen.drawRectangle(x, y, x + sx, y + sy);
+        // do Screen.setColor(false);
+        // do Screen.drawRectangle(_x, _y, _x + _sx, _y + _sy);
+        // do Screen.drawRectangle(_x.whole(), _y.whole(), _x.whole() + _sx - 1, _y.whole() + _sy - 1);
         return;
     }
 
     method void draw()
     {
         do Screen.setColor(true);
-        do Screen.drawRectangle(x, y, x + sx, y + sy);
+        // do Screen.drawRectangle(_x, _y, _x + _sx, _y + _sy);
+        do Screen.drawRectangle(_x.whole(), _y.whole(), _x.whole() + _sx - 1, _y.whole() + _sy - 1);
+
+        // do Screen.setColor(false);
+        // do Screen.drawPixel(_x, _y);
+        // do Screen.drawPixel(_x+1, _y);
+        // do Screen.drawPixel(_x+2, _y);
+        // do Screen.drawPixel(_x, _y+1);
+        // do Screen.drawPixel(_x, _y+2);
+
+        // do Screen.drawPixel(_x+_sx, _y);
+        // do Screen.drawPixel(_x+_sx-1, _y);
+        // do Screen.drawPixel(_x+_sx-2, _y);
+        // do Screen.drawPixel(_x+_sx, _y+1);
+        // do Screen.drawPixel(_x+_sx, _y+2);
+
+        // do Screen.drawPixel(_x, _y+_sy);
+        // do Screen.drawPixel(_x, _y+_sy-1);
+        // do Screen.drawPixel(_x, _y+_sy-2);
+        // do Screen.drawPixel(_x+1, _y+_sy);
+        // do Screen.drawPixel(_x+2, _y+_sy);
+
+        // do Screen.drawPixel(_x+_sx, _y+_sy);
+        // do Screen.drawPixel(_x+_sx, _y+_sy-1);
+        // do Screen.drawPixel(_x+_sx, _y+_sy-2);
+        // do Screen.drawPixel(_x+_sx-1, _y+_sy);
+        // do Screen.drawPixel(_x+_sx-2, _y+_sy);
+
         return;
     }
 
@@ -40,29 +82,198 @@ class Ball
         var int xBound;
         var int yBound;
         let xBound = platform.getX() + platform.getSX();
-        let yBound = platform.getY() - sy - 1;
+        let yBound = platform.getY() - _sy - 1;
 
         do clear();
-        let x = Math.max(Math.min(x + dx, 512 - 1 - sx), 0);
-        let maxX = 512 - 1 - sx;
-        if ((x = maxX) | (x = 0))
-        {
-            let dx = -dx;
-        }
-        let y = Math.max(Math.min(y + dy, 256 - 1 - sy), 0);
-        let maxY = 256 - 1 - sy;
-        if ((y = maxY) | (y = 0))
-        {
-            let dy = -dy;
-        }
 
-        if ((y = yBound) & (x > platform.getX()) & (x < xBound))
-        {
-            let dy = -dy;
-        }
+        let maxX = 512 - 1 - _sx;
+
+        do _x.add(_dx);
+        let _x = Float.max(Float.min(_x, maxX), 0);
+
+        if ((_x.whole() = maxX) | ((_x.whole() = 0) & (_x.fraction() = 0))) { do _dx.negate(); }
+
+        let maxY = 256 - 1 - _sy;
+        do _y.add(_dy);
+        let _y = Float.max(Float.min(_y, maxY), 0);
+
+        if (_y.whole() = maxY) { do _dy.negate(); }
+        if ((_y.whole() = 0) & (_y.fraction() = 0)) { do _dy.negate(); }
+        if ((_y.whole() = yBound) & (_x.whole() > platform.getX()) & (_x.whole() < xBound)) { do _dy.negate(); }
+
+        do handleCollisions(platform);
 
         do draw();
 
         return;
+
+        // var int maxX;
+        // var int maxY;
+
+        // var int xBound;
+        // var int yBound;
+        // let xBound = platform.getX() + platform.getSX();
+        // let yBound = platform.getY() - _sy - 1;
+
+        // do clear();
+        // let _x = Math.max(Math.min(_x + _dx, 512 - 1 - _sx), 0);
+        // let maxX = 512 - 1 - _sx;
+        // if ((_x = maxX) | (_x = 0))
+        // {
+        //     let _dx = -_dx;
+        // }
+        // let _y = Math.max(Math.min(_y + _dy, 256 - 1 - _sy), 0);
+        // let maxY = 256 - 1 - _sy;
+        // if (_y = maxY)
+        // {
+        //     // do _game.onLose();
+        //     let _dy = -_dy;
+        // }
+        // if (_y = 0)
+        // {
+        //     let _dy = -_dy;
+        // }
+        // if ((_y = yBound) & (_x > platform.getX()) & (_x < xBound))
+        // {
+        //     let _dy = -_dy;
+        // }
+
+        // do handleCollisions(platform);
+
+        // do draw();
+
+        // return;
+    }
+
+    method void handleCollisions(Platform platform)
+    {
+        var Array blocks;
+        var char blockChar;
+        var int diffX;
+        var int diffY;
+        var int px;
+        var int py;
+        var int i;
+        var int j;
+        var int startI;
+        var int startJ;
+        var int wholeX;
+        var int wholeY;
+
+        var Level level;
+        var int width;
+        var int height;
+
+        let wholeX = _x.whole();
+        let wholeY = _y.whole();
+
+        let level = _game.getLevel();
+        let blocks = level.getBlocks();
+        let width = level.getWidth();
+        let height = level.getHeight();
+
+        let startI = Math.max(wholeX / 32 - 1, 0);
+        let startJ = Math.max(wholeY / 24 - 1, 0);
+        let j = startJ;
+        while ((j < height) & (j < (startJ + 3)))
+        {
+            let i = startI;
+            while ((i < width) & (i < (startI + 3)))
+            {
+                let blockChar = blocks[j * width + i];
+                if (~(blockChar = 32)) // not " "
+                {
+                    let px = i * 32;
+                    let py = j * 24;
+
+                    if ((wholeX < (px + 34)) & ((wholeX + _sx ) > px) & (wholeY < (py + 26)) & ((wholeY + _sy ) > py))
+                    {
+                        if (~(_lastCollision = (j * width + i)))
+                        {
+                            let _lastCollision = j * width + i;
+                            let diffX = Math.min(wholeX + _sx, px + 31) - Math.max(wholeX, px);
+                            let diffY = Math.min(wholeY + _sy, py + 23) - Math.max(wholeY, py);
+                            
+                            if (diffX < diffY) { do _dx.negate(); }
+                            else { do _dy.negate(); }
+
+                            if ((blockChar = 35) | (blockChar = 84)) { do level.destroyBlock(i, j); }
+                            if (level.isComplete()) { do _game.nextLevel(); }
+                            return;
+                        }
+                    }
+                }
+
+                let i = i + 1;
+            }
+
+            let j = j + 1;
+        }
+
+        do blocks.dispose();
+
+        return;
+
+        // var Array blocks;
+        // var char blockChar;
+        // var int diffX;
+        // var int diffY;
+        // var int px;
+        // var int py;
+        // var int i;
+        // var int j;
+        // var int startI;
+        // var int startJ;
+
+        // var Level level;
+        // var int width;
+        // var int height;
+
+        // let level = _game.getLevel();
+        // let blocks = level.getBlocks();
+        // let width = level.getWidth();
+        // let height = level.getHeight();
+
+        // let startI = Math.max(_x / 32 - 1, 0);
+        // let startJ = Math.max(_y / 24 - 1, 0);
+        // let j = startJ;
+        // while ((j < height) & (j < (startJ + 3)))
+        // {
+        //     let i = startI;
+        //     while ((i < width) & (i < (startI + 3)))
+        //     {
+        //         let blockChar = blocks[j * width + i];
+        //         if (~(blockChar = 32)) // not " "
+        //         {
+        //             let px = i * 32;
+        //             let py = j * 24;
+
+        //             if ((_x < (px + 34)) & ((_x + _sx ) > px) & (_y < (py + 26)) & ((_y + _sy ) > py))
+        //             {
+        //                 if (~(_lastCollision = (j * width + i)))
+        //                 {
+        //                     let _lastCollision = j * width + i;
+        //                     let diffX = Math.min(_x + _sx, px + 31) - Math.max(_x, px);
+        //                     let diffY = Math.min(_y + _sy, py + 23) - Math.max(_y, py);
+                            
+        //                     if (diffX < diffY) { let _dx = -_dx; }
+        //                     else { let _dy = -_dy; }
+
+        //                     if ((blockChar = 35) | (blockChar = 84)) { do level.destroyBlock(i, j); }
+        //                     if (level.isComplete()) { do _game.nextLevel(); }
+        //                     return;
+        //                 }
+        //             }
+        //         }
+
+        //         let i = i + 1;
+        //     }
+
+        //     let j = j + 1;
+        // }
+
+        // do blocks.dispose();
+
+        // return;
     }
 }

@@ -1,7 +1,17 @@
 class Vector
 {
-    constructor Vector new()
+    field Fraction _x;
+    field Fraction _y;
+
+    constructor Vector new(Fraction x, Fraction y)
     {
-        
+        let _x = x;
+        let _y = y;
+        return this;
+    }
+
+    method void normalize()
+    {
+        return;
     }
 }

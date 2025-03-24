@@ -1,0 +1,205 @@
+function Float.new 0
+push constant 4
+call Memory.alloc 1
+pop pointer 0
+push pointer 0
+push argument 0
+push argument 1
+push argument 2
+call Float._changeTo 4
+pop temp 0
+push pointer 0
+return
+function Float._changeTo 0
+push argument 0
+pop pointer 0
+push constant 100
+pop this 3
+push argument 1
+pop this 0
+push argument 2
+push argument 3
+push this 3
+call Math.divide 2
+add
+pop this 1
+push argument 3
+push argument 3
+push this 3
+call Math.divide 2
+push this 3
+call Math.multiply 2
+sub
+pop this 2
+push constant 0
+return
+function Float.add 7
+push argument 0
+pop pointer 0
+push this 1
+push this 0
+call Math.multiply 2
+pop local 0
+push argument 1
+call Float.whole 1
+push argument 1
+call Float.sign 1
+call Math.multiply 2
+pop local 1
+push this 2
+push this 0
+call Math.multiply 2
+pop local 3
+push argument 1
+call Float.fraction 1
+push argument 1
+call Float.sign 1
+call Math.multiply 2
+pop local 4
+push local 0
+push local 1
+add
+pop local 2
+push local 3
+push local 4
+add
+pop local 5
+push local 5
+push constant 0
+lt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push local 2
+push constant 1
+sub
+pop local 2
+push this 3
+push local 5
+add
+pop local 5
+label IF_FALSE0
+push constant 1
+pop local 6
+push local 2
+push constant 0
+lt
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push local 6
+neg
+pop local 6
+push local 2
+neg
+pop local 2
+label IF_FALSE1
+push pointer 0
+push local 6
+push local 2
+push local 5
+call Float._changeTo 4
+pop temp 0
+push constant 0
+return
+function Float.negate 0
+push argument 0
+pop pointer 0
+push pointer 0
+push this 0
+neg
+push this 1
+push this 2
+call Float._changeTo 4
+pop temp 0
+push constant 0
+return
+function Float.max 0
+push argument 0
+call Float.whole 1
+push argument 1
+gt
+push argument 0
+call Float.whole 1
+push argument 1
+eq
+or
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push argument 0
+return
+label IF_FALSE0
+push argument 0
+call Float.dispose 1
+pop temp 0
+push constant 1
+push argument 1
+push constant 0
+call Float.new 3
+return
+function Float.min 0
+push argument 0
+call Float.whole 1
+push argument 1
+lt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push argument 0
+return
+label IF_FALSE0
+push argument 0
+call Float.dispose 1
+pop temp 0
+push constant 1
+push argument 1
+push constant 0
+call Float.new 3
+return
+function Float.print 0
+push argument 0
+pop pointer 0
+push this 1
+push this 0
+call Math.multiply 2
+call Output.printInt 1
+pop temp 0
+push constant 1
+call String.new 1
+push constant 46
+call String.appendChar 2
+call Output.printString 1
+pop temp 0
+push this 2
+call Output.printInt 1
+pop temp 0
+call Output.println 0
+pop temp 0
+push constant 0
+return
+function Float.sign 0
+push argument 0
+pop pointer 0
+push this 0
+return
+function Float.whole 0
+push argument 0
+pop pointer 0
+push this 1
+push this 0
+call Math.multiply 2
+return
+function Float.fraction 0
+push argument 0
+pop pointer 0
+push this 2
+return
+function Float.dispose 0
+push argument 0
+pop pointer 0
+push pointer 0
+call Memory.deAlloc 1
+pop temp 0
+push constant 0
+return

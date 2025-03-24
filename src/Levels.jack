@@ -1,0 +1,197 @@
+class Levels
+{
+    function Levels getLevel(int id)
+    {
+        if (id = 1) { return Levels.level1(); }
+        if (id = 2) { return Levels.level2(); }
+        if (id = 3) { return Levels.level3(); }
+        if (id = 4) { return Levels.level4(); }
+        if (id = 5) { return Levels.level5(); }
+        if (id = 6) { return Levels.level6(); }
+        if (id = 7) { return Levels.level7(); }
+        if (id = 8) { return Levels.level8(); }
+        if (id = 9) { return Levels.level9(); }
+        if (id = 10) { return Levels.levelZOV(); }
+        return 0;
+    }
+
+    function Level level1()
+    {
+        var Array stringArray;
+        var Level level;
+
+        let stringArray = Array.new(6);
+        let stringArray[0] = " ### #  # ##### ";
+        let stringArray[1] = " #          #   ";
+        let stringArray[2] = " #   #  #   #   ";
+        let stringArray[3] = " ##  #  #   #   ";
+        let stringArray[4] = " #   #  #   #   ";
+        let stringArray[5] = " #   #  #   #   ";
+
+        let level = Level.new(stringArray, 16, 6);
+        do stringArray.dispose();
+        return level;
+    }
+
+    function Level level2()
+    {
+        var Array stringArray;
+        var Level level;
+
+        let stringArray = Array.new(6);
+        let stringArray[0] = "################";
+        let stringArray[1] = "# # H # H # H ##";
+        let stringArray[2] = "## H # H # H # #";
+        let stringArray[3] = "# H # H # H # H#";
+        let stringArray[4] = "#H # H # H # H #";
+        let stringArray[5] = "# # H # H # H ##";
+
+        let level = Level.new(stringArray, 16, 6);
+        do stringArray.dispose();
+        return level;
+    }
+
+    function Level level3()
+    {
+        var Array stringArray;
+        var Level level;
+
+        let stringArray = Array.new(6);
+        let stringArray[0] = "################";
+        let stringArray[1] = "##T##T##T##T##T#";
+        let stringArray[2] = "################";
+        let stringArray[3] = "################";
+        let stringArray[4] = "##T##T##T##T##T#";
+        let stringArray[5] = "################";
+
+        let level = Level.new(stringArray, 16, 6);
+        do stringArray.dispose();
+        return level;
+    }
+
+    function Level level4()
+    {
+        var Array stringArray;
+        var Level level;
+
+        let stringArray = Array.new(6);
+        let stringArray[0] = "                ";
+        let stringArray[1] = "     ######     ";
+        let stringArray[2] = "     #T#T#T     ";
+        let stringArray[3] = "     T#T#T#     ";
+        let stringArray[4] = "     HHHHHH     ";
+        let stringArray[5] = "                ";
+
+        let level = Level.new(stringArray, 16, 6);
+        do stringArray.dispose();
+        return level;
+    }
+
+    function Level level5()
+    {
+        var Array stringArray;
+        var Level level;
+
+        let stringArray = Array.new(6);
+        let stringArray[0] = " # # # # # # # #";
+        let stringArray[1] = "# # # # # # # # ";
+        let stringArray[2] = " # # # # # # # #";
+        let stringArray[3] = "# # # # # # # # ";
+        let stringArray[4] = " # # # # # # # #";
+        let stringArray[5] = "# # # # # # # # ";
+
+        let level = Level.new(stringArray, 16, 6);
+        do stringArray.dispose();
+        return level;
+    }
+
+    function Level level6()
+    {
+        var Array stringArray;
+        var Level level;
+
+        let stringArray = Array.new(6);
+        let stringArray[0] = "                ";
+        let stringArray[1] = "       ##       ";
+        let stringArray[2] = "      ####      ";
+        let stringArray[3] = "    ########    ";
+        let stringArray[4] = "  ############  ";
+        let stringArray[5] = "                ";
+
+        let level = Level.new(stringArray, 16, 6);
+        do stringArray.dispose();
+        return level;
+    }
+
+    function Level level7()
+    {
+        var Array stringArray;
+        var Level level;
+
+        let stringArray = Array.new(6);
+        let stringArray[0] = "                ";
+        let stringArray[1] = "      H  H      ";
+        let stringArray[2] = "      H  H      ";
+        let stringArray[3] = "   #        #   ";
+        let stringArray[4] = "    ##    ##    ";
+        let stringArray[5] = "      ####      ";
+
+        let level = Level.new(stringArray, 16, 6);
+        do stringArray.dispose();
+        return level;
+    }
+
+    function Level level8()
+    {
+        var Array stringArray;
+        var Level level;
+
+        let stringArray = Array.new(6);
+        let stringArray[0] = "#               ";
+        let stringArray[1] = "###             ";
+        let stringArray[2] = "######          ";
+        let stringArray[3] = "#########       ";
+        let stringArray[4] = "############    ";
+        let stringArray[5] = "############### ";
+
+        let level = Level.new(stringArray, 16, 6);
+        do stringArray.dispose();
+        return level;
+    }
+
+    function Level level9()
+    {
+        var Array stringArray;
+        var Level level;
+
+        let stringArray = Array.new(6);
+        let stringArray[0] = "                ";
+        let stringArray[1] = " HHHHHHHHHHH H  ";
+        let stringArray[2] = " HT# H   H   H  ";
+        let stringArray[3] = " HTH   H   H H  ";
+        let stringArray[4] = " HHHHHHHHHHHHH  ";
+        let stringArray[5] = "                ";
+
+        let level = Level.new(stringArray, 16, 6);
+        do stringArray.dispose();
+        return level;
+    }
+
+    function Level levelZOV()
+    {
+        var Array stringArray;
+        var Level level;
+
+        let stringArray = Array.new(6);
+        let stringArray[0] = " #####     #   #";
+        let stringArray[1] = "    #      #   #";
+        let stringArray[2] = "   #   ### #   #";
+        let stringArray[3] = "  #    # #  # # ";
+        let stringArray[4] = " ##### ###   #  ";
+        let stringArray[5] = "                ";
+
+        let level = Level.new(stringArray, 16, 6);
+        do stringArray.dispose();
+        return level;
+    }
+}

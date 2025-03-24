@@ -1,0 +1,102 @@
+class Float
+{
+    field int _sign;
+    field int _whole;
+    field int _fraction;
+    field int _base;
+
+    constructor Float new(int sign, int whole, int fraction)
+    {
+        do _changeTo(sign, whole, fraction);
+        return this;
+    }
+
+    method void _changeTo(int sign, int whole, int fraction)
+    {
+        let _base = 100;
+        let _sign = sign;
+        let _whole = whole + (fraction / _base);
+        let _fraction = fraction - ((fraction / _base) * _base);
+        return;
+    }
+
+    method void add(Float other)
+    {
+        var int wh1;
+        var int wh2;
+        var int wh3;
+        var int fr1;
+        var int fr2;
+        var int fr3;
+        var int sign;
+
+        let wh1 = _whole * _sign;
+        let wh2 = other.whole() * other.sign();
+        let fr1 = _fraction * _sign;
+        let fr2 = other.fraction() * other.sign();
+
+        let wh3 = wh1 + wh2;
+        let fr3 = fr1 + fr2;
+        if (fr3 < 0)
+        {
+            let wh3 = wh3 - 1;
+            let fr3 = _base + fr3;
+        }
+        let sign = 1;
+        if (wh3 < 0) { let sign = -sign; let wh3 = -wh3; }
+
+        do _changeTo(sign, wh3, fr3);
+
+        return;
+    }
+
+    method void negate()
+    {
+        do _changeTo(-_sign, _whole, _fraction);
+        return;
+    }
+
+    function Float max(Float a, int b)
+    {
+        if ((a.whole() > b) | (a.whole() = b)) { return a; }
+        do a.dispose();
+        return Float.new(1, b, 0);
+    }
+
+    function Float min(Float a, int b)
+    {
+        if (a.whole() < b) { return a; }
+        do a.dispose();
+        return Float.new(1, b, 0);
+    }
+
+    method void print()
+    {
+        do Output.printInt(_whole * _sign);
+        do Output.printString(".");
+        do Output.printInt(_fraction);
+        do Output.println();
+        return;
+    }
+
+    method int sign()
+    {
+        return _sign;
+    }
+
+    method int whole()
+    {
+        return _whole * _sign;
+    }
+
+    method int fraction()
+    {
+        return _fraction;
+    }
+
+    method void dispose()
+    {
+        do Memory.deAlloc(this);
+        return;
+    }
+}

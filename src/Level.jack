@@ -1,0 +1,230 @@
+class Level
+{
+    field int sx;
+    field int sy;
+
+    field Array _blocks;
+    field int _width;
+    field int _height;
+
+    constructor Level new(Array strArray, int width, int height)
+    {
+        var char currentChar;
+        var String line;
+        var int x;
+        var int y;
+
+        let _blocks = Array.new(width * height);
+        let _width = width;
+        let _height = height;
+
+        let sx = 32;
+        let sy = 24;
+
+        while (y < height)
+        {
+            let line = strArray[y];
+
+            while (x < width)
+            {
+                let currentChar = line.charAt(x);
+                
+                let _blocks[y * width + x] = currentChar;
+                let x = x + 1;
+            }
+
+            do line.dispose();
+
+            let x = 0;
+            let y = y + 1;
+        }
+
+        return this;
+    }
+
+    method boolean isComplete()
+    {
+        var char blockChar;
+        var int i;
+        var int j;
+
+        let j = 0;
+        while (j < _height)
+        {
+            let i = 0;
+            while (i < _width)
+            {
+                let blockChar = _blocks[j * _width + i];
+                if ((blockChar = 35) | (blockChar = 84)) { return false; }
+
+                let i = i + 1;
+            }
+
+            let j = j + 1;
+        }
+
+        return true;
+    }
+
+    method void render()
+    {
+        var char blockChar;
+        var int px;
+        var int py;
+        var int x;
+        var int y;
+
+        let y = 0;
+        while (y < _height)
+        {
+            let x = 0;
+            while (x < _width)
+            {
+                let blockChar = _blocks[y * _width + x];
+                let px = x * sx;
+                let py = y * sy;
+                if (blockChar = 35) { do drawWall(px, py); } // #
+                if (blockChar = 72) { do drawBarrier(px, py); } // H
+                if (blockChar = 84) { do drawTNT(px, py); } // T
+
+                let x = x + 1;
+            }
+
+            let y = y + 1;
+        }
+
+        return;
+    }
+
+    method void destroyBlock(int x, int y)
+    {
+        let _blocks[y * _width + x] = 32;
+        do Screen.setColor(false);
+        do Screen.drawRectangle(x * sx, y * sy, x * sx + sx - 1, y * sy + sy - 1);
+        return;
+    }
+
+    method void drawWall(int x, int y)
+    {
+        var Array strArray;
+
+        let strArray = Array.new(12);
+        let strArray[0] =   "# # # # # # # # ";
+        let strArray[1] =   " ###############";
+        let strArray[2] =   "############### ";
+        let strArray[3] =   " ###############";
+        let strArray[4] =   "############### ";
+        let strArray[5] =   " ###############";
+        let strArray[6] =   "############### ";
+        let strArray[7] =   " ###############";
+        let strArray[8] =   "############### ";
+        let strArray[9] =   " ###############";
+        let strArray[10] =  "############### ";
+        let strArray[11] =  " # # # # # # # #";
+
+        do _drawBlock(strArray, x, y);
+        do strArray.dispose();
+        return;
+    }
+
+    method void drawBarrier(int x, int y)
+    {
+        var Array strArray;
+
+        let strArray = Array.new(12);
+        let strArray[0] =   "################";
+        let strArray[1] =   "################";
+        let strArray[2] =   "####        ####";
+        let strArray[3] =   "## ##      ## ##";
+        let strArray[4] =   "##  ###  ###  ##";
+        let strArray[5] =   "##    ####    ##";
+        let strArray[6] =   "##    ####    ##";
+        let strArray[7] =   "##  ###  ###  ##";
+        let strArray[8] =   "## ##      ## ##";
+        let strArray[9] =   "####        ####";
+        let strArray[10] =  "################";
+        let strArray[11] =  "################";
+
+        do _drawBlock(strArray, x, y);
+        do strArray.dispose();
+        return;
+    }
+
+    method void drawTNT(int x, int y)
+    {
+        var Array strArray;
+
+        let strArray = Array.new(12);
+        let strArray[0] =   "################";
+        let strArray[1] =   "###  # ## #  ###";
+        let strArray[2] =   "##            ##";
+        let strArray[3] =   "# ### #  # ### #";
+        let strArray[4] =   "#  #  ## #  #  #";
+        let strArray[5] =   "#  #  ## #  #  #";
+        let strArray[6] =   "#  #  # ##  #  #";
+        let strArray[7] =   "#  #  # ##  #  #";
+        let strArray[8] =   "#  #  #  #  #  #";
+        let strArray[9] =   "##            ##";
+        let strArray[10] =  "###  # ## #  ###";
+        let strArray[11] =  "################";
+
+        do _drawBlock(strArray, x, y);
+        do strArray.dispose();
+        return;
+    }
+
+    method void _drawBlock(Array strArray, int x, int y)
+    {
+        var char currentChar;
+        var String line;
+        var int i;
+        var int j;
+
+        do Screen.setColor(true);
+        let j = 0;
+        while (j < 12)
+        {
+            let i = 0;
+            let line = strArray[j];
+
+            while (i < 16)
+            {
+                let currentChar = line.charAt(i);
+                if (currentChar = 35)
+                {
+                    do Screen.drawRectangle(x + (i * 2), y + (j * 2), x + (i * 2) + 1, y + (j * 2) + 1);
+                }
+                let i = i + 1;
+            }
+
+            do line.dispose();
+
+            let j = j + 1;
+        }
+
+        do strArray.dispose();
+        return;
+    }
+
+    method int getBlocks()
+    {
+        return _blocks;
+    }
+
+    method int getWidth()
+    {
+        return _width;
+    }
+
+    method int getHeight()
+    {
+        return _height;
+    }
+
+    method void dispose()
+    {
+        do _blocks.dispose();
+        // do Memory.deAlloc(this);
+        return;
+    }
+}
