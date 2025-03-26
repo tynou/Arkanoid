@@ -1,13 +1,13 @@
 class Main
 {
-	static Game game;
+	static Game _game;
 
 	function void main()
 	{
         do Main.waitForInput("Arkanoid");
 
-        let game = Game.new();
-        do game.run();
+        let _game = Game.new();
+        do _game.run();
 
 		return;
 	}

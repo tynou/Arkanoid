@@ -12,6 +12,10 @@ class Levels
         if (id = 8) { return Levels.level8(); }
         if (id = 9) { return Levels.level9(); }
         if (id = 10) { return Levels.levelZOV(); }
+
+        do Main.waitForInput("You won!");
+        do Sys.halt();
+
         return 0;
     }
 

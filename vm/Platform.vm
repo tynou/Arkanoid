@@ -27,9 +27,13 @@ push this 1
 push this 0
 push this 2
 add
+push constant 1
+sub
 push this 1
 push this 3
 add
+push constant 1
+sub
 call Screen.drawRectangle 4
 pop temp 0
 push constant 0
@@ -46,29 +50,12 @@ push this 1
 push this 0
 push this 2
 add
-push this 1
-push this 3
-add
-call Screen.drawRectangle 4
-pop temp 0
-push constant 0
-call Screen.setColor 1
-pop temp 0
-push this 0
-push constant 2
-add
-push this 1
-push constant 2
-add
-push this 0
-push this 2
-add
-push constant 2
+push constant 1
 sub
 push this 1
 push this 3
 add
-push constant 2
+push constant 1
 sub
 call Screen.drawRectangle 4
 pop temp 0
@@ -111,4 +98,12 @@ function Platform.getSX 0
 push argument 0
 pop pointer 0
 push this 2
+return
+function Platform.dispose 0
+push argument 0
+pop pointer 0
+push pointer 0
+call Memory.deAlloc 1
+pop temp 0
+push constant 0
 return

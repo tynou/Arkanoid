@@ -1,0 +1,34 @@
+class Scoreboard
+{
+    field int _points;
+
+    constructor Scoreboard new()
+    {
+        let _points = 0;
+        do draw();
+        return this;
+    }
+
+    method void draw()
+    {
+        do Output.moveCursor(0, 0);
+        do Output.printString("Score: ");
+        do Output.printInt(_points);
+        
+        do Screen.setColor(true);
+        do Screen.drawLine(0, 20, 511, 20);
+        return;
+    }
+
+    method void addPoints(int amount)
+    {
+        let _points = _points + amount;
+        do draw();
+        return;
+    }
+
+    method void setLevel(int level)
+    {
+        return;
+    }
+}
