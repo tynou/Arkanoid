@@ -102,6 +102,13 @@ call Float._changeTo 4
 pop temp 0
 push constant 0
 return
+function Float.setWhole 0
+push argument 0
+pop pointer 0
+push argument 1
+pop this 1
+push constant 0
+return
 function Float.negate 0
 push argument 0
 pop pointer 0

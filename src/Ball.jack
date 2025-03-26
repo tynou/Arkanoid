@@ -7,6 +7,7 @@ class Ball
     field Float _dx;
     field Float _dy;
     field int _offset;
+    field boolean _anchored;
     
     field int _lastCollision;
 
@@ -20,11 +21,18 @@ class Ball
         let _dy = Float.new(-1, 0, 71);
         let _sx = 8;
         let _sy = 8;
+        let _anchored = true;
 
-        let _offset = 0;
+        let _offset = 15;
 
         let _game = game;
         return this;
+    }
+
+    method void unanchor()
+    {
+        let _anchored = false;
+        return;
     }
 
     method void clear()
@@ -50,10 +58,6 @@ class Ball
         let y = _y.whole();
 
         do Screen.setColor(true);
-        do Output.moveCursor(10, 10);
-        do Output.printInt(x);
-        do Output.printString(" / ");
-        do Output.printInt(y);
         do Screen.drawRectangle(x, y, x + _sx - 1, y + _sy - 1);
 
         return;
@@ -74,29 +78,31 @@ class Ball
 
         do clear();
 
-        // do handleCollisions(platform);
-
-        let maxX = 512 - 1 - _sx;
-        do _x.add(_dx);
-        let _x = Float.max(Float.min(_x, maxX), 0);
-        let wholeX = _x.whole();
-
-        if ((wholeX = maxX) | ((wholeX = 0) & (_x.fraction() = 0))) { do _dx.negate(); }
-
-        let maxY = 256 - 1 - _sy;
-        do _y.add(_dy);
-        let _y = Float.max(Float.min(_y, maxY), _offset);
-        let wholeY = _y.whole();
-
-        if (wholeY = maxY) { do _dy.negate(); }
-        if ((wholeY = _offset) & (_y.fraction() = 0)) { do _dy.negate(); }
-        if ((wholeY = yBound) & (wholeX > platform.getX()) & (wholeX < xBound))
+        if (_anchored)
         {
-            // do Output.printInt(wholeX - platform.getX());
-            do _dy.negate();
+            do _x.setWhole(platform.getX() + (platform.getSX() / 2) - (_sx / 2));
         }
 
-        do handleCollisions(platform);
+        if (~_anchored)
+        {
+            let maxX = 512 - 1 - _sx;
+            do _x.add(_dx);
+            let _x = Float.max(Float.min(_x, maxX), 0);
+            let wholeX = _x.whole();
+
+            if ((wholeX = maxX) | ((wholeX = 0) & (_x.fraction() = 0))) { do _dx.negate(); }
+
+            let maxY = 256 - 1 - _sy;
+            do _y.add(_dy);
+            let _y = Float.max(Float.min(_y, maxY), _offset);
+            let wholeY = _y.whole();
+
+            if (wholeY = maxY) { do _game.onLose(); }
+            if ((wholeY = _offset) & (_y.fraction() = 0)) { do _dy.negate(); }
+            if ((wholeY = yBound) & (wholeX > platform.getX()) & (wholeX < xBound)) { do _dy.negate(); }
+
+            do handleCollisions(platform);
+        }
 
         do draw();
 
@@ -144,8 +150,8 @@ class Ball
                     let px = i * 32;
                     let py = j * 24 + _offset;
 
-                    // if (((wholeX) < (px + 32)) & ((wholeX + _sx) > (px)) & ((wholeY) < (py + 24)) & ((wholeY + _sy) > (py)))
-                    if (Ball.colliding(wholeX, wholeY, _sx, _sy, px, py, 32, 24))
+                    // if (Ball.colliding(wholeX, wholeY, _sx, _sy, px, py, 32, 24))
+                    if (((wholeX) < (px + 32)) & ((wholeX + _sx) > (px)) & ((wholeY) < (py + 24)) & ((wholeY + _sy) > (py)))
                     {
                         if (~(_lastCollision = (j * width + i)))
                         {
@@ -157,18 +163,15 @@ class Ball
                             // let diffY = wholeY + (_sy / 2) - (py + 12);
                             // if (diffY < 0) {let diffY = -diffY; }
                             
-                            // do Output.printInt(diffX-diffY);
-                            // do Output.println();
                             if (diffX < diffY) { do _dx.negate(); }
-                            if (diffX = diffY) {do _dx.negate(); do _dy.negate(); }
+                            if (diffX = diffY) { do _dx.negate(); do _dy.negate(); }
                             if (diffX > diffY) { do _dy.negate(); }
+                            // else { do _dy.negate(); }
 
-                            do _game.addPoints(10);
-                            if ((blockChar = 35) | (blockChar = 84)) { do level.destroyBlock(i, j); }
+                            if ((blockChar = 35) | (blockChar = 84)) { do level.destroyBlock(i, j, _game); }
                             if (level.isComplete()) { do _game.nextLevel(); }
                             return;
                         }
-                        do Output.printInt(1);
                     }
                 }
 
@@ -178,8 +181,6 @@ class Ball
             let j = j + 1;
         }
 
-        do blocks.dispose();
-
         return;
     }
 
@@ -187,5 +188,15 @@ class Ball
     {
         if (((x1 + w1) < x2) | ((x2 + w2) < x1) | ((y1 + h1) < y2) | ((y2 + h2) < y1)) { return false; }
         return true;
+    }
+
+    method void dispose()
+    {
+        do _x.dispose();
+        do _y.dispose();
+        do _dx.dispose();
+        do _dy.dispose();
+        do Memory.deAlloc(this);
+        return;
     }
 }

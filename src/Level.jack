@@ -22,7 +22,7 @@ class Level
         let sx = 32;
         let sy = 24;
 
-        let _offset = 0;
+        let _offset = 15;
 
         let y = 0;
         while (y < _height)
@@ -33,8 +33,6 @@ class Level
             while (x < _width)
             {
                 let currentChar = line.charAt(x);
-                do Output.moveCursor(10, 10);
-                do Output.printInt(x);
                 
                 let _blocks[y * _width + x] = currentChar;
                 let x = x + 1;
@@ -102,7 +100,7 @@ class Level
         return;
     }
 
-    method void destroyBlock(int x, int y)
+    method void destroyBlock(int x, int y, Game game)
     {
         var char block;
         let block = _blocks[y * _width + x];
@@ -111,17 +109,19 @@ class Level
         do Screen.setColor(false);
         do Screen.drawRectangle(x * sx, y * sy + _offset, x * sx + sx - 1, y * sy + sy - 1 + _offset);
 
+        do game.addPoints(10);
+
         if (block = 32) { return; }
         if (block = 84)
         {
-            do destroyBlock(x - 1, y);
-            do destroyBlock(x + 1, y);
-            do destroyBlock(x, y - 1);
-            do destroyBlock(x, y + 1);
-            do destroyBlock(x - 1, y - 1);
-            do destroyBlock(x - 1, y + 1);
-            do destroyBlock(x + 1, y - 1);
-            do destroyBlock(x + 1, y + 1);
+            do destroyBlock(x - 1, y, game);
+            do destroyBlock(x + 1, y, game);
+            do destroyBlock(x, y - 1, game);
+            do destroyBlock(x, y + 1, game);
+            do destroyBlock(x - 1, y - 1, game);
+            do destroyBlock(x - 1, y + 1, game);
+            do destroyBlock(x + 1, y - 1, game);
+            do destroyBlock(x + 1, y + 1, game);
         }
         return;
     }
@@ -224,7 +224,6 @@ class Level
             let j = j + 1;
         }
 
-        do strArray.dispose();
         return;
     }
 
@@ -246,7 +245,7 @@ class Level
     method void dispose()
     {
         do _blocks.dispose();
-        // do Memory.deAlloc(this);
+        do Memory.deAlloc(this);
         return;
     }
 }

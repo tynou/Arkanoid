@@ -11,27 +11,36 @@ class Game
     {
         let _levelId = 1;
         let _currentLevel = 0;
+        let _platform = 0;
+        let _ball = 0;
         let _stopLevel = false;
         let _score = 0;
 
         return this;
     }
 
-    method void drawScore()
+    method void drawScoreboard()
     {
+        do Screen.setColor(true);
+
         do Output.moveCursor(0, 0);
         do Output.printString("Score: ");
         do Output.printInt(_score);
+
+        do Output.moveCursor(0, 15);
+        do Output.printString("Level: ");
+        do Output.printInt(_levelId);
         
-        // do Screen.setColor(true);
-        // do Screen.drawLine(0, 20, 511, 20);
+        do Screen.drawLine(100, 0, 100, 14);
+        do Screen.drawLine(0, 14, 511, 14);
+
         return;
     }
 
     method void addPoints(int amount)
     {
         let _score = _score + amount;
-        do drawScore();
+        do drawScoreboard();
         return;
     }
 
@@ -42,6 +51,7 @@ class Game
             let _stopLevel = false;
             do Screen.clearScreen();
             do _loadLevel();
+            do drawScoreboard();
             do _runLevel();
             if (_levelId = 0)
             {
@@ -53,16 +63,16 @@ class Game
 
     method void _loadLevel()
     {
-        if (~(_currentLevel = 0)) {
-            do _currentLevel.dispose();
-        }
+        if (~(_currentLevel = 0)) { do _currentLevel.dispose(); }
+
+        if (~(_platform = 0)) { do _platform.dispose(); }
+        if (~(_ball = 0)) { do _ball.dispose(); }
 
         let _currentLevel = Levels.getLevel(_levelId);
 
         let _platform = Platform.new();
         let _ball = Ball.new(0, 256 - 16 - 8 - 10, 1, -1, this);
         do _platform.draw();
-        do _ball.draw();
         return;
     }
 
@@ -84,6 +94,7 @@ class Game
             if (curKey = 130) { do _platform.move(-2); }
             if (curKey = 132) { do _platform.move(2); }
             if (curKey = 131) { do nextLevel(); }
+            if (curKey = 32) { do _ball.unanchor(); }
 
             do _ball.step(_platform);
 

@@ -50,6 +50,12 @@ class Float
         return;
     }
 
+    method void setWhole(int whole)
+    {
+        let _whole = whole;
+        return;
+    }
+
     method void negate()
     {
         do _changeTo(-_sign, _whole, _fraction);

@@ -26,8 +26,8 @@ class Platform
         do Screen.setColor(true);
         do Screen.drawRectangle(x, y, x + sx - 1, y + sy - 1);
 
-        do Screen.setColor(false);
-        do Screen.drawRectangle(x + 2, y + 2, x + sx - 2 - 1, y + sy - 2 - 1);
+        // do Screen.setColor(false);
+        // do Screen.drawRectangle(x + 2, y + 2, x + sx - 2 - 1, y + sy - 2 - 1);
         return;
     }
 
@@ -52,5 +52,11 @@ class Platform
     method int getSX()
     {
         return sx;
+    }
+
+    method void dispose()
+    {
+        do Memory.deAlloc(this);
+        return;
     }
 }
