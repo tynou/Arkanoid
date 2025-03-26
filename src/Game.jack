@@ -5,21 +5,34 @@ class Game
     field Platform _platform;
     field Ball _ball;
     field boolean _stopLevel;
+    field int _score;
 
     constructor Game new()
     {
         let _levelId = 1;
         let _currentLevel = 0;
         let _stopLevel = false;
+        let _score = 0;
 
-        // let _platform = Platform.new();
-        // let _ball = Ball.new(150, 36, -1, -1, this);
-        // do _platform.draw();
-        // do _ball.draw();
-
-        // do _loadLevel();
-        // do _currentLevel.render();
         return this;
+    }
+
+    method void drawScore()
+    {
+        do Output.moveCursor(0, 0);
+        do Output.printString("Score: ");
+        do Output.printInt(_score);
+        
+        // do Screen.setColor(true);
+        // do Screen.drawLine(0, 20, 511, 20);
+        return;
+    }
+
+    method void addPoints(int amount)
+    {
+        let _score = _score + amount;
+        do drawScore();
+        return;
     }
 
     method void run()
@@ -74,7 +87,7 @@ class Game
 
             do _ball.step(_platform);
 
-            // do Sys.wait(3);
+            // do Sys.wait(1);
         }
 
         return;

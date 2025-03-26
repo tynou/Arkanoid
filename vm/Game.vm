@@ -1,5 +1,5 @@
 function Game.new 0
-push constant 5
+push constant 6
 call Memory.alloc 1
 pop pointer 0
 push constant 1
@@ -8,7 +8,51 @@ push constant 0
 pop this 1
 push constant 0
 pop this 4
+push constant 0
+pop this 5
 push pointer 0
+return
+function Game.drawScore 0
+push argument 0
+pop pointer 0
+push constant 0
+push constant 0
+call Output.moveCursor 2
+pop temp 0
+push constant 7
+call String.new 1
+push constant 83
+call String.appendChar 2
+push constant 99
+call String.appendChar 2
+push constant 111
+call String.appendChar 2
+push constant 114
+call String.appendChar 2
+push constant 101
+call String.appendChar 2
+push constant 58
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+call Output.printString 1
+pop temp 0
+push this 5
+call Output.printInt 1
+pop temp 0
+push constant 0
+return
+function Game.addPoints 0
+push argument 0
+pop pointer 0
+push this 5
+push argument 1
+add
+pop this 5
+push pointer 0
+call Game.drawScore 1
+pop temp 0
+push constant 0
 return
 function Game.run 0
 push argument 0

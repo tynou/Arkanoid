@@ -27,9 +27,13 @@ push this 1
 push this 0
 push this 2
 add
+push constant 1
+sub
 push this 1
 push this 3
 add
+push constant 1
+sub
 call Screen.drawRectangle 4
 pop temp 0
 push constant 0
@@ -46,9 +50,13 @@ push this 1
 push this 0
 push this 2
 add
+push constant 1
+sub
 push this 1
 push this 3
 add
+push constant 1
+sub
 call Screen.drawRectangle 4
 pop temp 0
 push constant 0
@@ -65,10 +73,14 @@ push this 2
 add
 push constant 2
 sub
+push constant 1
+sub
 push this 1
 push this 3
 add
 push constant 2
+sub
+push constant 1
 sub
 call Screen.drawRectangle 4
 pop temp 0

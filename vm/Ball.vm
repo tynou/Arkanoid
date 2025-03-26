@@ -1,5 +1,5 @@
 function Ball.new 0
-push constant 8
+push constant 9
 call Memory.alloc 1
 pop pointer 0
 push constant 1
@@ -14,47 +14,136 @@ call Float.new 3
 pop this 1
 push constant 1
 push constant 0
-push constant 44
+push constant 71
 call Float.new 3
 pop this 4
 push constant 1
 neg
 push constant 0
-push constant 89
+push constant 71
 call Float.new 3
 pop this 5
 push constant 8
 pop this 2
 push constant 8
 pop this 3
+push constant 0
+pop this 6
 push argument 4
-pop this 7
+pop this 8
 push pointer 0
 return
-function Ball.clear 0
+function Ball.clear 2
 push argument 0
 pop pointer 0
-push constant 0
-return
-function Ball.draw 0
-push argument 0
-pop pointer 0
-push constant 0
-not
-call Screen.setColor 1
-pop temp 0
 push this 0
 call Float.whole 1
+pop local 0
 push this 1
 call Float.whole 1
-push this 0
-call Float.whole 1
+pop local 1
+push constant 0
+call Screen.setColor 1
+pop temp 0
+push local 0
+push local 1
+push local 0
 push this 2
 add
 push constant 1
 sub
+push local 1
+call Screen.drawLine 4
+pop temp 0
+push local 0
+push local 1
+push local 0
+push local 1
+push this 3
+add
+push constant 1
+sub
+call Screen.drawLine 4
+pop temp 0
+push local 0
+push this 2
+add
+push constant 1
+sub
+push local 1
+push local 0
+push this 2
+add
+push constant 1
+sub
+push local 1
+push this 3
+add
+push constant 1
+sub
+call Screen.drawLine 4
+pop temp 0
+push local 0
+push local 1
+push this 3
+add
+push constant 1
+sub
+push local 0
+push this 2
+add
+push constant 1
+sub
+push local 1
+push this 3
+add
+push constant 1
+sub
+call Screen.drawLine 4
+pop temp 0
+push constant 0
+return
+function Ball.draw 2
+push argument 0
+pop pointer 0
+push this 0
+call Float.whole 1
+pop local 0
 push this 1
 call Float.whole 1
+pop local 1
+push constant 0
+not
+call Screen.setColor 1
+pop temp 0
+push constant 10
+push constant 10
+call Output.moveCursor 2
+pop temp 0
+push local 0
+call Output.printInt 1
+pop temp 0
+push constant 3
+call String.new 1
+push constant 32
+call String.appendChar 2
+push constant 47
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+call Output.printString 1
+pop temp 0
+push local 1
+call Output.printInt 1
+pop temp 0
+push local 0
+push local 1
+push local 0
+push this 2
+add
+push constant 1
+sub
+push local 1
 push this 3
 add
 push constant 1
@@ -63,7 +152,7 @@ call Screen.drawRectangle 4
 pop temp 0
 push constant 0
 return
-function Ball.step 4
+function Ball.step 6
 push argument 0
 pop pointer 0
 push argument 1
@@ -71,14 +160,14 @@ call Platform.getX 1
 push argument 1
 call Platform.getSX 1
 add
-pop local 2
+pop local 4
 push argument 1
 call Platform.getY 1
 push this 3
 sub
 push constant 1
 sub
-pop local 3
+pop local 5
 push pointer 0
 call Ball.clear 1
 pop temp 0
@@ -100,10 +189,11 @@ call Float.max 2
 pop this 0
 push this 0
 call Float.whole 1
+pop local 2
+push local 2
 push local 0
 eq
-push this 0
-call Float.whole 1
+push local 2
 push constant 0
 eq
 push this 0
@@ -132,11 +222,13 @@ pop temp 0
 push this 1
 push local 1
 call Float.min 2
-push constant 0
+push this 6
 call Float.max 2
 pop this 1
 push this 1
 call Float.whole 1
+pop local 3
+push local 3
 push local 1
 eq
 if-goto IF_TRUE1
@@ -146,9 +238,8 @@ push this 5
 call Float.negate 1
 pop temp 0
 label IF_FALSE1
-push this 1
-call Float.whole 1
-push constant 0
+push local 3
+push this 6
 eq
 push this 1
 call Float.fraction 1
@@ -162,19 +253,16 @@ push this 5
 call Float.negate 1
 pop temp 0
 label IF_FALSE2
-push this 1
-call Float.whole 1
 push local 3
+push local 5
 eq
-push this 0
-call Float.whole 1
+push local 2
 push argument 1
 call Platform.getX 1
 gt
 and
-push this 0
-call Float.whole 1
 push local 2
+push local 4
 lt
 and
 if-goto IF_TRUE3
@@ -202,7 +290,7 @@ pop local 10
 push this 1
 call Float.whole 1
 pop local 11
-push this 7
+push this 8
 call Game.getLevel 1
 pop local 12
 push local 12
@@ -223,6 +311,8 @@ push constant 0
 call Math.max 2
 pop local 8
 push local 11
+push this 6
+sub
 push constant 24
 call Math.divide 2
 push constant 1
@@ -282,34 +372,22 @@ pop local 4
 push local 7
 push constant 24
 call Math.multiply 2
+push this 6
+add
 pop local 5
 push local 10
-push local 4
-push constant 34
-add
-lt
-push local 10
+push local 11
 push this 2
-add
-push local 4
-gt
-and
-push local 11
-push local 5
-push constant 26
-add
-lt
-and
-push local 11
 push this 3
-add
+push local 4
 push local 5
-gt
-and
+push constant 32
+push constant 24
+call Ball.colliding 8
 if-goto IF_TRUE1
 goto IF_FALSE1
 label IF_TRUE1
-push this 6
+push this 7
 push local 7
 push local 13
 call Math.multiply 2
@@ -325,12 +403,12 @@ push local 13
 call Math.multiply 2
 push local 6
 add
-pop this 6
+pop this 7
 push local 10
 push this 2
 add
 push local 4
-push constant 31
+push constant 32
 add
 call Math.min 2
 push local 10
@@ -342,7 +420,7 @@ push local 11
 push this 3
 add
 push local 5
-push constant 23
+push constant 24
 add
 call Math.min 2
 push local 11
@@ -359,12 +437,34 @@ label IF_TRUE3
 push this 4
 call Float.negate 1
 pop temp 0
-goto IF_END3
 label IF_FALSE3
+push local 2
+push local 3
+eq
+if-goto IF_TRUE4
+goto IF_FALSE4
+label IF_TRUE4
+push this 4
+call Float.negate 1
+pop temp 0
 push this 5
 call Float.negate 1
 pop temp 0
-label IF_END3
+label IF_FALSE4
+push local 2
+push local 3
+gt
+if-goto IF_TRUE5
+goto IF_FALSE5
+label IF_TRUE5
+push this 5
+call Float.negate 1
+pop temp 0
+label IF_FALSE5
+push this 8
+push constant 10
+call Game.addPoints 2
+pop temp 0
 push local 1
 push constant 35
 eq
@@ -372,27 +472,30 @@ push local 1
 push constant 84
 eq
 or
-if-goto IF_TRUE4
-goto IF_FALSE4
-label IF_TRUE4
+if-goto IF_TRUE6
+goto IF_FALSE6
+label IF_TRUE6
 push local 12
 push local 6
 push local 7
 call Level.destroyBlock 3
 pop temp 0
-label IF_FALSE4
+label IF_FALSE6
 push local 12
 call Level.isComplete 1
-if-goto IF_TRUE5
-goto IF_FALSE5
-label IF_TRUE5
-push this 7
+if-goto IF_TRUE7
+goto IF_FALSE7
+label IF_TRUE7
+push this 8
 call Game.nextLevel 1
 pop temp 0
-label IF_FALSE5
+label IF_FALSE7
 push constant 0
 return
 label IF_FALSE2
+push constant 1
+call Output.printInt 1
+pop temp 0
 label IF_FALSE1
 label IF_FALSE0
 push local 6
@@ -411,4 +514,37 @@ push local 0
 call Array.dispose 1
 pop temp 0
 push constant 0
+return
+function Ball.colliding 0
+push argument 0
+push argument 2
+add
+push argument 4
+lt
+push argument 4
+push argument 6
+add
+push argument 0
+lt
+or
+push argument 1
+push argument 3
+add
+push argument 5
+lt
+or
+push argument 5
+push argument 7
+add
+push argument 1
+lt
+or
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 0
+return
+label IF_FALSE0
+push constant 0
+not
 return

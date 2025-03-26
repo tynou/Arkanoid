@@ -2,6 +2,7 @@ class Level
 {
     field int sx;
     field int sy;
+    field int _offset;
 
     field Array _blocks;
     field int _width;
@@ -21,21 +22,26 @@ class Level
         let sx = 32;
         let sy = 24;
 
-        while (y < height)
+        let _offset = 0;
+
+        let y = 0;
+        while (y < _height)
         {
             let line = strArray[y];
 
-            while (x < width)
+            let x = 0;
+            while (x < _width)
             {
                 let currentChar = line.charAt(x);
+                do Output.moveCursor(10, 10);
+                do Output.printInt(x);
                 
-                let _blocks[y * width + x] = currentChar;
+                let _blocks[y * _width + x] = currentChar;
                 let x = x + 1;
             }
 
             do line.dispose();
 
-            let x = 0;
             let y = y + 1;
         }
 
@@ -82,7 +88,7 @@ class Level
             {
                 let blockChar = _blocks[y * _width + x];
                 let px = x * sx;
-                let py = y * sy;
+                let py = y * sy + _offset;
                 if (blockChar = 35) { do drawWall(px, py); } // #
                 if (blockChar = 72) { do drawBarrier(px, py); } // H
                 if (blockChar = 84) { do drawTNT(px, py); } // T
@@ -98,9 +104,25 @@ class Level
 
     method void destroyBlock(int x, int y)
     {
+        var char block;
+        let block = _blocks[y * _width + x];
+
         let _blocks[y * _width + x] = 32;
         do Screen.setColor(false);
-        do Screen.drawRectangle(x * sx, y * sy, x * sx + sx - 1, y * sy + sy - 1);
+        do Screen.drawRectangle(x * sx, y * sy + _offset, x * sx + sx - 1, y * sy + sy - 1 + _offset);
+
+        if (block = 32) { return; }
+        if (block = 84)
+        {
+            do destroyBlock(x - 1, y);
+            do destroyBlock(x + 1, y);
+            do destroyBlock(x, y - 1);
+            do destroyBlock(x, y + 1);
+            do destroyBlock(x - 1, y - 1);
+            do destroyBlock(x - 1, y + 1);
+            do destroyBlock(x + 1, y - 1);
+            do destroyBlock(x + 1, y + 1);
+        }
         return;
     }
 
