@@ -98,7 +98,7 @@ class Game
 
             do _ball.step(_platform);
 
-            do Sys.wait(1);
+            //do Sys.wait(1);
         }
 
         return;
