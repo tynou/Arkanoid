@@ -7,14 +7,14 @@
     
     1. Обычный блок
     
-        ![обычный блок](https://i.postimg.cc/RFH7gkjz/2025-03-26-23-17-31.png)
+        [![обычный блок](https://i.postimg.cc/3wskLdXt/image.png)](https://postimg.cc/CZ4M5M68)
     
     2. Нерушимый блок
 
-        ![нерушимый блок](https://i.postimg.cc/Dzts4Cmp/2025-03-26-23-20-11.png)
+        [![нерушимый блок](https://i.postimg.cc/Y03jqRJP/image.png)](https://postimg.cc/CnRwcGMC)
     3. Взрывающийся блок (может разрушать все остальные типы блоков)
 
-        ![нерушимый блок](https://i.postimg.cc/WbH44ddX/2025-03-26-23-25-54.png)
+        [![взрывающийся блок](https://i.postimg.cc/s2hXZsk7/image.png)](https://postimg.cc/wt9HC8Tj)
 ## Как запустить игру?
 ### Для скачанного заранее VMemulator
 1. Скачайте .zip и распакуйте его в любое удобное место.
@@ -37,8 +37,8 @@
 ## Изображения
 Геймплей Арканоида
 
-![Геймплей арканоида](https://i.postimg.cc/05J6Jdqh/2025-03-26-23-56-15.png)
-![Геймплей арканоида](https://i.postimg.cc/PJzTQqyv/2025-03-27-00-00-50.png)
+[![геймплей арканоида](https://i.postimg.cc/NM8jpbf0/image.png)](https://postimg.cc/DJZhzrGV)
+[![геймплей арканоида](https://i.postimg.cc/BbMQG6F9/image.png)](https://postimg.cc/fSShcM5B)
 
 
 ## Для тех, кто в танке
