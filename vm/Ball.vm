@@ -535,6 +535,11 @@ goto WHILE_EXP0
 label WHILE_END0
 push constant 0
 return
+function Ball.isAnchored 0
+push argument 0
+pop pointer 0
+push this 7
+return
 function Ball.colliding 0
 push argument 0
 push argument 2

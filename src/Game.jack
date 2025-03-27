@@ -91,14 +91,14 @@ class Game
         while (~_stopLevel)
         {
             let curKey = Keyboard.keyPressed();
-            if (curKey = 130) { do _platform.move(-2); }
-            if (curKey = 132) { do _platform.move(2); }
+            if (curKey = 130) { do _platform.move(-1); }
+            if (curKey = 132) { do _platform.move(1); }
             if (curKey = 131) { do nextLevel(); }
             if (curKey = 32) { do _ball.unanchor(); }
 
             do _ball.step(_platform);
 
-            //do Sys.wait(1);
+            // do Sys.wait(1);
         }
 
         return;
@@ -109,6 +109,8 @@ class Game
         do _currentLevel.dispose();
         let _levelId = 0;
         let _stopLevel = true;
+        do Main.waitForInput("You lost!");
+        do Sys.halt();
         return;
     }
 

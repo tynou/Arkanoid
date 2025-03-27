@@ -12,7 +12,8 @@ class Main
 		return;
 	}
 
-	function void waitForInput(String message) {
+	function void waitForInput(String message)
+    {
         var int textX;
         var char key;
 
@@ -25,7 +26,8 @@ class Main
         do Output.printString("Press SPACE to continue");
         do Output.moveCursor(0, 0);
         
-        while (~(key = 32)) {
+        while (~(key = 32))
+        {
             let key = Keyboard.keyPressed();
         }
 

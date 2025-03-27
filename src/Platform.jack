@@ -1,57 +1,61 @@
 class Platform
 {
-    field int x;
-    field int y;
-    field int sx;
-    field int sy;
+    field int _x;
+    field int _y;
+    field int _sx;
+    field int _sy;
 
     constructor Platform new()
     {
-        let x = 0;
-        let y = 256 - 16 - 8;
-        let sx = 64;
-        let sy = 8;
+        let _x = 0;
+        let _y = 256 - 16 - 8;
+        let _sx = 64;
+        let _sy = 8;
         return this;
     }
 
     method void clear()
     {
         do Screen.setColor(false);
-        do Screen.drawRectangle(x, y, x + sx - 1, y + sy - 1);
+        // do Screen.drawRectangle(_x, _y, _x + _sx - 1, _y + _sy - 1);
+        do Screen.drawLine(_x, _y, _x + _sx - 1, _y);
+        do Screen.drawLine(_x, _y, _x, _y + _sy - 1);
+        do Screen.drawLine(_x + _sx - 1, _y, _x + _sx - 1, _y + _sy - 1);
+        do Screen.drawLine(_x, _y + _sy - 1, _x + _sx - 1, _y + _sy - 1);
         return;
     }
 
     method void draw()
     {
         do Screen.setColor(true);
-        do Screen.drawRectangle(x, y, x + sx - 1, y + sy - 1);
+        do Screen.drawRectangle(_x, _y, _x + _sx - 1, _y + _sy - 1);
 
         // do Screen.setColor(false);
-        // do Screen.drawRectangle(x + 2, y + 2, x + sx - 2 - 1, y + sy - 2 - 1);
+        // do Screen.drawRectangle(_x + 2, _y + 2, _x + _sx - 2 - 1, _y + _sy - 2 - 1);
         return;
     }
 
     method void move(int dir)
     {
         do clear();
-        let x = Math.max(Math.min(x + dir, 512 - 1 - sx), 0);
+        let _x = Math.max(Math.min(_x + dir, 512 - 1 - _sx), 0);
         do draw();
         return;
     }
 
     method int getX()
     {
-        return x;
+        return _x;
     }
 
     method int getY()
     {
-        return y;
+        return _y;
     }
 
     method int getSX()
     {
-        return sx;
+        return _sx;
     }
 
     method void dispose()
