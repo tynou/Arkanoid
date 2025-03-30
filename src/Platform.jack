@@ -17,7 +17,6 @@ class Platform
     method void clear()
     {
         do Screen.setColor(false);
-        // do Screen.drawRectangle(_x, _y, _x + _sx - 1, _y + _sy - 1);
         do Screen.drawLine(_x, _y, _x + _sx - 1, _y);
         do Screen.drawLine(_x, _y, _x, _y + _sy - 1);
         do Screen.drawLine(_x + _sx - 1, _y, _x + _sx - 1, _y + _sy - 1);
@@ -29,9 +28,6 @@ class Platform
     {
         do Screen.setColor(true);
         do Screen.drawRectangle(_x, _y, _x + _sx - 1, _y + _sy - 1);
-
-        // do Screen.setColor(false);
-        // do Screen.drawRectangle(_x + 2, _y + 2, _x + _sx - 2 - 1, _y + _sy - 2 - 1);
         return;
     }
 

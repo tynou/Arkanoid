@@ -864,11 +864,12 @@ pop temp 0
 pop pointer 1
 push temp 0
 pop that 0
-push pointer 0
 push local 0
 push argument 1
 push argument 2
-call Level._drawBlock 4
+push constant 16
+push constant 12
+call Sprite.draw 5
 pop temp 0
 push local 0
 call Array.dispose 1
@@ -1373,11 +1374,12 @@ pop temp 0
 pop pointer 1
 push temp 0
 pop that 0
-push pointer 0
 push local 0
 push argument 1
 push argument 2
-call Level._drawBlock 4
+push constant 16
+push constant 12
+call Sprite.draw 5
 pop temp 0
 push local 0
 call Array.dispose 1
@@ -1882,98 +1884,16 @@ pop temp 0
 pop pointer 1
 push temp 0
 pop that 0
-push pointer 0
 push local 0
 push argument 1
 push argument 2
-call Level._drawBlock 4
+push constant 16
+push constant 12
+call Sprite.draw 5
 pop temp 0
 push local 0
 call Array.dispose 1
 pop temp 0
-push constant 0
-return
-function Level._drawBlock 4
-push argument 0
-pop pointer 0
-push constant 0
-not
-call Screen.setColor 1
-pop temp 0
-push constant 0
-pop local 3
-label WHILE_EXP0
-push local 3
-push constant 12
-lt
-not
-if-goto WHILE_END0
-push constant 0
-pop local 2
-push local 3
-push argument 1
-add
-pop pointer 1
-push that 0
-pop local 1
-label WHILE_EXP1
-push local 2
-push constant 16
-lt
-not
-if-goto WHILE_END1
-push local 1
-push local 2
-call String.charAt 2
-pop local 0
-push local 0
-push constant 35
-eq
-if-goto IF_TRUE0
-goto IF_FALSE0
-label IF_TRUE0
-push argument 2
-push local 2
-push constant 2
-call Math.multiply 2
-add
-push argument 3
-push local 3
-push constant 2
-call Math.multiply 2
-add
-push argument 2
-push local 2
-push constant 2
-call Math.multiply 2
-add
-push constant 1
-add
-push argument 3
-push local 3
-push constant 2
-call Math.multiply 2
-add
-push constant 1
-add
-call Screen.drawRectangle 4
-pop temp 0
-label IF_FALSE0
-push local 2
-push constant 1
-add
-pop local 2
-goto WHILE_EXP1
-label WHILE_END1
-push local 1
-call String.dispose 1
-pop temp 0
-push local 3
-push constant 1
-add
-pop local 3
-goto WHILE_EXP0
-label WHILE_END0
 push constant 0
 return
 function Level.getBlocks 0

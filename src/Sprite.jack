@@ -1,0 +1,34 @@
+class Sprite
+{
+    function void draw(Array strArray, int x, int y, int w, int h)
+    {
+        var char currentChar;
+        var String line;
+        var int i;
+        var int j;
+
+        do Screen.setColor(true);
+        let j = 0;
+        while (j < h)
+        {
+            let i = 0;
+            let line = strArray[j];
+
+            while (i < w)
+            {
+                let currentChar = line.charAt(i);
+                if (currentChar = 35)
+                {
+                    do Screen.drawRectangle(x + (i * 2), y + (j * 2), x + (i * 2) + 1, y + (j * 2) + 1);
+                }
+                let i = i + 1;
+            }
+
+            do line.dispose();
+
+            let j = j + 1;
+        }
+
+        return;
+    }
+}

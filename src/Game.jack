@@ -6,21 +6,27 @@ class Game
     field Ball _ball;
     field boolean _stopLevel;
     field int _score;
+    field int _lives;
+    field int _maxLives;
 
     constructor Game new()
     {
+        let _maxLives = 5;
         let _levelId = 1;
         let _currentLevel = 0;
         let _platform = 0;
         let _ball = 0;
         let _stopLevel = false;
         let _score = 0;
+        let _lives = 5;
 
         return this;
     }
 
     method void drawScoreboard()
     {
+        var int i;
+
         do Screen.setColor(true);
 
         do Output.moveCursor(0, 0);
@@ -34,6 +40,52 @@ class Game
         do Screen.drawLine(100, 0, 100, 14);
         do Screen.drawLine(0, 14, 511, 14);
 
+        let i = 0;
+        while (i < _lives)
+        {
+            do drawHeart(512 - ((i + 1) * 16), 0);
+            let i = i + 1;
+        }
+        while (i < _maxLives)
+        {
+            do drawEmptyHeart(512 - ((i + 1) * 16), 0);
+            let i = i + 1;
+        }
+
+        return;
+    }
+
+    method void drawHeart(int x, int y)
+    {
+        var Array strArray;
+
+        let strArray = Array.new(7);
+        let strArray[0] =   " ## ## ";
+        let strArray[1] =   "#######";
+        let strArray[2] =   "#######";
+        let strArray[3] =   " ##### ";
+        let strArray[4] =   "  ###  ";
+        let strArray[5] =   "   #   ";
+
+        do Sprite.draw(strArray, x, y, 7, 6);
+        do strArray.dispose();
+        return;
+    }
+
+    method void drawEmptyHeart(int x, int y)
+    {
+        var Array strArray;
+
+        let strArray = Array.new(7);
+        let strArray[0] =   " ## ## ";
+        let strArray[1] =   "#  #  #";
+        let strArray[2] =   "#     #";
+        let strArray[3] =   " #   # ";
+        let strArray[4] =   "  # #  ";
+        let strArray[5] =   "   #   ";
+
+        do Sprite.draw(strArray, x, y, 7, 6);
+        do strArray.dispose();
         return;
     }
 
@@ -83,6 +135,12 @@ class Game
         return;
     }
 
+    method void reloadLevel()
+    {
+        let _stopLevel = true;
+        return;
+    }
+
     method void _runLevel()
     {
         var char curKey;
@@ -106,6 +164,13 @@ class Game
 
     method void onLose()
     {
+        let _lives = _lives - 1;
+        if (~(_lives = 0))
+        {
+            do reloadLevel();
+            return;
+        }
+
         do _currentLevel.dispose();
         let _levelId = 0;
         let _stopLevel = true;
