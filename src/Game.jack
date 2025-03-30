@@ -23,33 +23,42 @@ class Game
         return this;
     }
 
-    method void drawScoreboard()
+    method void drawScoreboard(boolean updateScore, boolean updateLevel, boolean updateHealth)
     {
         var int i;
 
         do Screen.setColor(true);
 
-        do Output.moveCursor(0, 0);
-        do Output.printString("Score: ");
-        do Output.printInt(_score);
+        if (updateScore)
+        {
+            do Output.moveCursor(0, 0);
+            do Output.printString("Score: ");
+            do Output.printInt(_score);
+        }
 
-        do Output.moveCursor(0, 15);
-        do Output.printString("Level: ");
-        do Output.printInt(_levelId);
+        if (updateLevel)
+        {
+            do Output.moveCursor(0, 15);
+            do Output.printString("Level: ");
+            do Output.printInt(_levelId);
+        }
         
         do Screen.drawLine(100, 0, 100, 14);
         do Screen.drawLine(0, 14, 511, 14);
 
-        let i = 0;
-        while (i < _lives)
+        if (updateHealth)
         {
-            do drawHeart(512 - ((i + 1) * 16), 0);
-            let i = i + 1;
-        }
-        while (i < _maxLives)
-        {
-            do drawEmptyHeart(512 - ((i + 1) * 16), 0);
-            let i = i + 1;
+            let i = 0;
+            while (i < _lives)
+            {
+                do drawHeart(512 - ((i + 1) * 16), 0);
+                let i = i + 1;
+            }
+            while (i < _maxLives)
+            {
+                do drawEmptyHeart(512 - ((i + 1) * 16), 0);
+                let i = i + 1;
+            }
         }
 
         return;
@@ -67,7 +76,7 @@ class Game
         let strArray[4] =   "  ###  ";
         let strArray[5] =   "   #   ";
 
-        do Sprite.draw(strArray, x, y, 7, 6);
+        do Sprite.draw(strArray, x, y, 7, 6, 2);
         do strArray.dispose();
         return;
     }
@@ -84,7 +93,7 @@ class Game
         let strArray[4] =   "  # #  ";
         let strArray[5] =   "   #   ";
 
-        do Sprite.draw(strArray, x, y, 7, 6);
+        do Sprite.draw(strArray, x, y, 7, 6, 2);
         do strArray.dispose();
         return;
     }
@@ -92,7 +101,7 @@ class Game
     method void addPoints(int amount)
     {
         let _score = _score + amount;
-        do drawScoreboard();
+        do drawScoreboard(true, false, false);
         return;
     }
 
@@ -103,7 +112,7 @@ class Game
             let _stopLevel = false;
             do Screen.clearScreen();
             do _loadLevel();
-            do drawScoreboard();
+            do drawScoreboard(true, true, true);
             do _runLevel();
             if (_levelId = 0)
             {

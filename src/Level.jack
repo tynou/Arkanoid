@@ -12,8 +12,8 @@ class Level
     {
         var char currentChar;
         var String line;
-        var int x;
-        var int y;
+        var int i;
+        var int j;
 
         let _blocks = Array.new(width * height);
         let _width = width;
@@ -24,23 +24,23 @@ class Level
 
         let _offset = 15;
 
-        let y = 0;
-        while (y < _height)
+        let j = 0;
+        while (j < _height)
         {
-            let line = strArray[y];
+            let line = strArray[j];
 
-            let x = 0;
-            while (x < _width)
+            let i = 0;
+            while (i < _width)
             {
-                let currentChar = line.charAt(x);
+                let currentChar = line.charAt(i);
                 
-                let _blocks[y * _width + x] = currentChar;
-                let x = x + 1;
+                let _blocks[j * _width + i] = currentChar;
+                let i = i + 1;
             }
 
             do line.dispose();
 
-            let y = y + 1;
+            let j = j + 1;
         }
 
         return this;
@@ -144,7 +144,8 @@ class Level
         let strArray[10] =  "############### ";
         let strArray[11] =  " # # # # # # # #";
 
-        do Sprite.draw(strArray, x, y, 16, 12);
+
+        do Sprite.draw(strArray, x, y, 16, 12, 2);
         do strArray.dispose();
         return;
     }
@@ -167,7 +168,7 @@ class Level
         let strArray[10] =  "################";
         let strArray[11] =  "################";
 
-        do Sprite.draw(strArray, x, y, 16, 12);
+        do Sprite.draw(strArray, x, y, 16, 12, 2);
         do strArray.dispose();
         return;
     }
@@ -190,7 +191,7 @@ class Level
         let strArray[10] =  "###  # ## #  ###";
         let strArray[11] =  "################";
 
-        do Sprite.draw(strArray, x, y, 16, 12);
+        do Sprite.draw(strArray, x, y, 16, 12, 2);
         do strArray.dispose();
         return;
     }

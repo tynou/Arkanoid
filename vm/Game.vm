@@ -27,6 +27,10 @@ push constant 0
 not
 call Screen.setColor 1
 pop temp 0
+push argument 1
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
 push constant 0
 push constant 0
 call Output.moveCursor 2
@@ -52,6 +56,11 @@ pop temp 0
 push this 5
 call Output.printInt 1
 pop temp 0
+label IF_FALSE0
+push argument 2
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
 push constant 0
 push constant 15
 call Output.moveCursor 2
@@ -77,6 +86,7 @@ pop temp 0
 push this 0
 call Output.printInt 1
 pop temp 0
+label IF_FALSE1
 push constant 100
 push constant 0
 push constant 100
@@ -89,6 +99,10 @@ push constant 511
 push constant 14
 call Screen.drawLine 4
 pop temp 0
+push argument 3
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
 push constant 0
 pop local 0
 label WHILE_EXP0
@@ -137,6 +151,7 @@ add
 pop local 0
 goto WHILE_EXP1
 label WHILE_END1
+label IF_FALSE2
 push constant 0
 return
 function Game.drawHeart 1
@@ -288,7 +303,8 @@ push argument 1
 push argument 2
 push constant 7
 push constant 6
-call Sprite.draw 5
+push constant 2
+call Sprite.draw 6
 pop temp 0
 push local 0
 call Array.dispose 1
@@ -444,7 +460,8 @@ push argument 1
 push argument 2
 push constant 7
 push constant 6
-call Sprite.draw 5
+push constant 2
+call Sprite.draw 6
 pop temp 0
 push local 0
 call Array.dispose 1
@@ -459,7 +476,11 @@ push argument 1
 add
 pop this 5
 push pointer 0
-call Game.drawScoreboard 1
+push constant 0
+not
+push constant 0
+push constant 0
+call Game.drawScoreboard 4
 pop temp 0
 push constant 0
 return
@@ -479,7 +500,13 @@ push pointer 0
 call Game._loadLevel 1
 pop temp 0
 push pointer 0
-call Game.drawScoreboard 1
+push constant 0
+not
+push constant 0
+not
+push constant 0
+not
+call Game.drawScoreboard 4
 pop temp 0
 push pointer 0
 call Game._runLevel 1

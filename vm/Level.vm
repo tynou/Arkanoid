@@ -869,7 +869,8 @@ push argument 1
 push argument 2
 push constant 16
 push constant 12
-call Sprite.draw 5
+push constant 2
+call Sprite.draw 6
 pop temp 0
 push local 0
 call Array.dispose 1
@@ -1379,7 +1380,8 @@ push argument 1
 push argument 2
 push constant 16
 push constant 12
-call Sprite.draw 5
+push constant 2
+call Sprite.draw 6
 pop temp 0
 push local 0
 call Array.dispose 1
@@ -1889,7 +1891,8 @@ push argument 1
 push argument 2
 push constant 16
 push constant 12
-call Sprite.draw 5
+push constant 2
+call Sprite.draw 6
 pop temp 0
 push local 0
 call Array.dispose 1

@@ -37,28 +37,32 @@ goto IF_FALSE0
 label IF_TRUE0
 push argument 1
 push local 2
-push constant 2
+push argument 5
 call Math.multiply 2
 add
 push argument 2
 push local 3
-push constant 2
+push argument 5
 call Math.multiply 2
 add
 push argument 1
 push local 2
-push constant 2
+push argument 5
 call Math.multiply 2
 add
-push constant 1
+push argument 5
 add
+push constant 1
+sub
 push argument 2
 push local 3
-push constant 2
+push argument 5
 call Math.multiply 2
 add
-push constant 1
+push argument 5
 add
+push constant 1
+sub
 call Screen.drawRectangle 4
 pop temp 0
 label IF_FALSE0
