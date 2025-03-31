@@ -80,11 +80,10 @@ call Screen.drawLine 4
 pop temp 0
 push constant 0
 return
-function Platform.draw 0
+function Platform.paint 0
 push argument 0
 pop pointer 0
-push constant 0
-not
+push argument 1
 call Screen.setColor 1
 pop temp 0
 push this 0
@@ -122,7 +121,9 @@ push constant 0
 call Math.max 2
 pop this 0
 push pointer 0
-call Platform.draw 1
+push constant 0
+not
+call Platform.paint 2
 pop temp 0
 push constant 0
 return

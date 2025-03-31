@@ -50,14 +50,26 @@ class Ball
         return;
     }
 
-    method void draw()
+    method void fullClear()
     {
         var int x;
         var int y;
         let x = _x.whole();
         let y = _y.whole();
 
-        do Screen.setColor(true);
+        do Screen.setColor(false);
+        do Screen.drawRectangle(x, y, x + _sx - 1, y + _sy - 1);
+        return;
+    }
+
+    method void paint(boolean color)
+    {
+        var int x;
+        var int y;
+        let x = _x.whole();
+        let y = _y.whole();
+
+        do Screen.setColor(color);
         do Screen.drawRectangle(x, y, x + _sx - 1, y + _sy - 1);
 
         return;
@@ -104,7 +116,7 @@ class Ball
             do handleCollisions(platform);
         }
 
-        do draw();
+        do paint(true);
 
         return;
     }

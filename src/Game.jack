@@ -8,6 +8,7 @@ class Game
     field int _score;
     field int _lives;
     field int _maxLives;
+    field boolean _died;
 
     constructor Game new()
     {
@@ -19,6 +20,7 @@ class Game
         let _stopLevel = false;
         let _score = 0;
         let _lives = 5;
+        let _died = false;
 
         return this;
     }
@@ -48,6 +50,9 @@ class Game
 
         if (updateHealth)
         {
+            do Screen.setColor(false);
+            do Screen.drawRectangle(512 - 100, 0, 511, 13);
+
             let i = 0;
             while (i < _lives)
             {
@@ -110,7 +115,6 @@ class Game
         while (true)
         {
             let _stopLevel = false;
-            do Screen.clearScreen();
             do _loadLevel();
             do drawScoreboard(true, true, true);
             do _runLevel();
@@ -124,16 +128,31 @@ class Game
 
     method void _loadLevel()
     {
-        if (~(_currentLevel = 0)) { do _currentLevel.dispose(); }
+        if(~_died)
+        {
+            if (~(_currentLevel = 0)) { do _currentLevel.dispose(); }
+        }
+
+        if (_died)
+        {
+            if (~(_platform = 0)) { do _platform.paint(false); }
+            if (~(_ball = 0)) { do _ball.paint(false); }
+        }
 
         if (~(_platform = 0)) { do _platform.dispose(); }
         if (~(_ball = 0)) { do _ball.dispose(); }
 
-        let _currentLevel = Levels.getLevel(_levelId);
+        if (~_died)
+        {
+            do Screen.clearScreen();
+            let _currentLevel = Levels.getLevel(_levelId);
+            do _currentLevel.render();
+        }
 
+        let _died = false;
         let _platform = Platform.new();
         let _ball = Ball.new(0, 256 - 16 - 8 - 10, 1, -1, this);
-        do _platform.draw();
+        do _platform.paint(true);
         return;
     }
 
@@ -147,6 +166,7 @@ class Game
     method void reloadLevel()
     {
         let _stopLevel = true;
+        let _died = true;
         return;
     }
 
@@ -154,7 +174,7 @@ class Game
     {
         var char curKey;
 
-        do _currentLevel.render();
+        // do _currentLevel.render();
         while (~_stopLevel)
         {
             let curKey = Keyboard.keyPressed();

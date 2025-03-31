@@ -113,7 +113,7 @@ call Screen.drawLine 4
 pop temp 0
 push constant 0
 return
-function Ball.draw 2
+function Ball.fullClear 2
 push argument 0
 pop pointer 0
 push this 0
@@ -123,7 +123,34 @@ push this 1
 call Float.whole 1
 pop local 1
 push constant 0
-not
+call Screen.setColor 1
+pop temp 0
+push local 0
+push local 1
+push local 0
+push this 2
+add
+push constant 1
+sub
+push local 1
+push this 3
+add
+push constant 1
+sub
+call Screen.drawRectangle 4
+pop temp 0
+push constant 0
+return
+function Ball.paint 2
+push argument 0
+pop pointer 0
+push this 0
+call Float.whole 1
+pop local 0
+push this 1
+call Float.whole 1
+pop local 1
+push argument 1
 call Screen.setColor 1
 pop temp 0
 push local 0
@@ -292,7 +319,9 @@ call Ball.handleCollisions 2
 pop temp 0
 label IF_FALSE1
 push pointer 0
-call Ball.draw 1
+push constant 0
+not
+call Ball.paint 2
 pop temp 0
 push constant 0
 return

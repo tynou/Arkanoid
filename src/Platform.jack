@@ -24,9 +24,9 @@ class Platform
         return;
     }
 
-    method void draw()
+    method void paint(boolean color)
     {
-        do Screen.setColor(true);
+        do Screen.setColor(color);
         do Screen.drawRectangle(_x, _y, _x + _sx - 1, _y + _sy - 1);
         return;
     }
@@ -35,7 +35,7 @@ class Platform
     {
         do clear();
         let _x = Math.max(Math.min(_x + dir, 512 - 1 - _sx), 0);
-        do draw();
+        do paint(true);
         return;
     }
 
