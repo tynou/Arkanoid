@@ -50,18 +50,6 @@ class Ball
         return;
     }
 
-    method void fullClear()
-    {
-        var int x;
-        var int y;
-        let x = _x.whole();
-        let y = _y.whole();
-
-        do Screen.setColor(false);
-        do Screen.drawRectangle(x, y, x + _sx - 1, y + _sy - 1);
-        return;
-    }
-
     method void paint(boolean color)
     {
         var int x;
@@ -162,22 +150,17 @@ class Ball
                     let px = i * 32;
                     let py = j * 24 + _offset;
 
-                    // if (((wholeX) < (px + 32)) & ((wholeX + _sx) > (px)) & ((wholeY) < (py + 24)) & ((wholeY + _sy) > (py)))
                     if (Ball.colliding(wholeX, wholeY, _sx, _sy, px, py, 32, 24))
                     {
                         if (~(_lastCollision = (j * width + i)))
                         {
                             let _lastCollision = j * width + i;
-                            // let diffX = Math.min(wholeX + _sx, px + 32) - Math.max(wholeX, px);
-                            // let diffY = Math.min(wholeY + _sy, py + 24) - Math.max(wholeY, py);
                             let diffX = wholeX + (_sx / 2) - (px + 16);
                             if (diffX < 0) { let diffX = -diffX; }
                             let diffY = wholeY + (_sy / 2) - (py + 12);
                             if (diffY < 0) { let diffY = -diffY; }
                             
                             if (diffY < diffX) { do _dx.negate(); }
-                            // if (diffX = diffY) { do _dx.negate(); do _dy.negate(); }
-                            // if (diffX < diffY) { do _dy.negate(); }
                             else { do _dy.negate(); }
 
                             if ((blockChar = 35) | (blockChar = 84))

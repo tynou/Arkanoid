@@ -26,7 +26,7 @@ call Game.run 1
 pop temp 0
 push constant 0
 return
-function Main.waitForInput 2
+function Main.waitForInput 3
 push constant 32
 push argument 0
 call String.length 1
@@ -34,19 +34,6 @@ push constant 2
 call Math.divide 2
 sub
 pop local 0
-call Screen.clearScreen 0
-pop temp 0
-push constant 9
-push local 0
-call Output.moveCursor 2
-pop temp 0
-push argument 0
-call Output.printString 1
-pop temp 0
-push constant 11
-push constant 21
-call Output.moveCursor 2
-pop temp 0
 push constant 23
 call String.new 1
 push constant 80
@@ -95,6 +82,21 @@ push constant 117
 call String.appendChar 2
 push constant 101
 call String.appendChar 2
+pop local 2
+call Screen.clearScreen 0
+pop temp 0
+push constant 9
+push local 0
+call Output.moveCursor 2
+pop temp 0
+push argument 0
+call Output.printString 1
+pop temp 0
+push constant 11
+push constant 21
+call Output.moveCursor 2
+pop temp 0
+push local 2
 call Output.printString 1
 pop temp 0
 push constant 0
@@ -112,6 +114,9 @@ call Keyboard.keyPressed 0
 pop local 1
 goto WHILE_EXP0
 label WHILE_END0
+push local 2
+call String.dispose 1
+pop temp 0
 call Screen.clearScreen 0
 pop temp 0
 push constant 0

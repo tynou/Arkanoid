@@ -1,5 +1,5 @@
 function Game.new 0
-push constant 9
+push constant 10
 call Memory.alloc 1
 pop pointer 0
 push constant 5
@@ -20,23 +20,17 @@ push constant 5
 pop this 6
 push constant 0
 pop this 8
+push constant 100
+pop this 9
 push pointer 0
 return
-function Game.drawScoreboard 1
+function Game.drawScoreboard 4
 push argument 0
 pop pointer 0
-push constant 0
-not
-call Screen.setColor 1
-pop temp 0
 push argument 1
 if-goto IF_TRUE0
 goto IF_FALSE0
 label IF_TRUE0
-push constant 0
-push constant 0
-call Output.moveCursor 2
-pop temp 0
 push constant 7
 call String.new 1
 push constant 83
@@ -53,20 +47,25 @@ push constant 58
 call String.appendChar 2
 push constant 32
 call String.appendChar 2
+pop local 1
+push constant 0
+push constant 0
+call Output.moveCursor 2
+pop temp 0
+push local 1
 call Output.printString 1
 pop temp 0
 push this 5
 call Output.printInt 1
+pop temp 0
+push local 1
+call String.dispose 1
 pop temp 0
 label IF_FALSE0
 push argument 2
 if-goto IF_TRUE1
 goto IF_FALSE1
 label IF_TRUE1
-push constant 0
-push constant 15
-call Output.moveCursor 2
-pop temp 0
 push constant 7
 call String.new 1
 push constant 76
@@ -83,15 +82,92 @@ push constant 58
 call String.appendChar 2
 push constant 32
 call String.appendChar 2
+pop local 2
+push constant 0
+push constant 15
+call Output.moveCursor 2
+pop temp 0
+push local 2
 call Output.printString 1
 pop temp 0
 push this 0
 call Output.printInt 1
 pop temp 0
+push local 2
+call String.dispose 1
+pop temp 0
 label IF_FALSE1
+push argument 4
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+push constant 0
+call Screen.setColor 1
+pop temp 0
+push constant 512
+push constant 250
+sub
+push constant 0
+push constant 512
+push constant 100
+sub
+push constant 13
+call Screen.drawRectangle 4
+pop temp 0
+push constant 12
+call String.new 1
+push constant 71
+call String.appendChar 2
+push constant 97
+call String.appendChar 2
+push constant 109
+call String.appendChar 2
+push constant 101
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 115
+call String.appendChar 2
+push constant 112
+call String.appendChar 2
+push constant 101
+call String.appendChar 2
+push constant 101
+call String.appendChar 2
+push constant 100
+call String.appendChar 2
+push constant 58
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+pop local 3
+push constant 0
+push constant 30
+call Output.moveCursor 2
+pop temp 0
+push local 3
+call Output.printString 1
+pop temp 0
+push this 9
+call Output.printInt 1
+pop temp 0
+push local 3
+call String.dispose 1
+pop temp 0
+label IF_FALSE2
+push constant 0
+not
+call Screen.setColor 1
+pop temp 0
 push constant 100
 push constant 0
 push constant 100
+push constant 14
+call Screen.drawLine 4
+pop temp 0
+push constant 200
+push constant 0
+push constant 200
 push constant 14
 call Screen.drawLine 4
 pop temp 0
@@ -102,9 +178,9 @@ push constant 14
 call Screen.drawLine 4
 pop temp 0
 push argument 3
-if-goto IF_TRUE2
-goto IF_FALSE2
-label IF_TRUE2
+if-goto IF_TRUE3
+goto IF_FALSE3
+label IF_TRUE3
 push constant 0
 call Screen.setColor 1
 pop temp 0
@@ -164,7 +240,7 @@ add
 pop local 0
 goto WHILE_EXP1
 label WHILE_END1
-label IF_FALSE2
+label IF_FALSE3
 push constant 0
 return
 function Game.drawHeart 1
@@ -493,7 +569,29 @@ push constant 0
 not
 push constant 0
 push constant 0
-call Game.drawScoreboard 4
+push constant 0
+call Game.drawScoreboard 5
+pop temp 0
+push constant 0
+return
+function Game._changeGameSpeed 0
+push argument 0
+pop pointer 0
+push this 9
+push argument 1
+add
+push constant 1500
+call Math.min 2
+push constant 1
+call Math.max 2
+pop this 9
+push pointer 0
+push constant 0
+push constant 0
+push constant 0
+push constant 0
+not
+call Game.drawScoreboard 5
 pop temp 0
 push constant 0
 return
@@ -517,7 +615,9 @@ push constant 0
 not
 push constant 0
 not
-call Game.drawScoreboard 4
+push constant 0
+not
+call Game.drawScoreboard 5
 pop temp 0
 push pointer 0
 call Game._runLevel 1
@@ -559,26 +659,34 @@ function Game._loadLevel 0
 push argument 0
 pop pointer 0
 push this 8
-not
 if-goto IF_TRUE0
 goto IF_FALSE0
 label IF_TRUE0
-push this 1
+push this 2
 push constant 0
 eq
 not
 if-goto IF_TRUE1
 goto IF_FALSE1
 label IF_TRUE1
-push this 1
-call Level.dispose 1
+push this 2
+push constant 0
+call Platform.paint 2
 pop temp 0
 label IF_FALSE1
-label IF_FALSE0
-push this 8
+push this 3
+push constant 0
+eq
+not
 if-goto IF_TRUE2
 goto IF_FALSE2
 label IF_TRUE2
+push this 3
+push constant 0
+call Ball.paint 2
+pop temp 0
+label IF_FALSE2
+label IF_FALSE0
 push this 2
 push constant 0
 eq
@@ -587,8 +695,7 @@ if-goto IF_TRUE3
 goto IF_FALSE3
 label IF_TRUE3
 push this 2
-push constant 0
-call Platform.paint 2
+call Platform.dispose 1
 pop temp 0
 label IF_FALSE3
 push this 3
@@ -599,38 +706,25 @@ if-goto IF_TRUE4
 goto IF_FALSE4
 label IF_TRUE4
 push this 3
-push constant 0
-call Ball.paint 2
+call Ball.dispose 1
 pop temp 0
 label IF_FALSE4
-label IF_FALSE2
-push this 2
-push constant 0
-eq
+push this 8
 not
 if-goto IF_TRUE5
 goto IF_FALSE5
 label IF_TRUE5
-push this 2
-call Platform.dispose 1
-pop temp 0
-label IF_FALSE5
-push this 3
+push this 1
 push constant 0
 eq
 not
 if-goto IF_TRUE6
 goto IF_FALSE6
 label IF_TRUE6
-push this 3
-call Ball.dispose 1
+push this 1
+call Level.dispose 1
 pop temp 0
 label IF_FALSE6
-push this 8
-not
-if-goto IF_TRUE7
-goto IF_FALSE7
-label IF_TRUE7
 call Screen.clearScreen 0
 pop temp 0
 push this 0
@@ -639,7 +733,7 @@ pop this 1
 push this 1
 call Level.render 1
 pop temp 0
-label IF_FALSE7
+label IF_FALSE5
 push constant 0
 pop this 8
 call Platform.new 0
@@ -688,9 +782,11 @@ not
 pop this 8
 push constant 0
 return
-function Game._runLevel 1
+function Game._runLevel 2
 push argument 0
 pop pointer 0
+push constant 0
+pop local 1
 label WHILE_EXP0
 push this 4
 not
@@ -698,27 +794,39 @@ not
 if-goto WHILE_END0
 call Keyboard.keyPressed 0
 pop local 0
+push local 1
+push constant 1
+add
+pop local 1
 push local 0
-push constant 130
+push constant 87
 eq
+push local 0
+push constant 119
+eq
+or
 if-goto IF_TRUE0
 goto IF_FALSE0
 label IF_TRUE0
-push this 2
+push pointer 0
 push constant 1
-neg
-call Platform.move 2
+call Game._changeGameSpeed 2
 pop temp 0
 label IF_FALSE0
 push local 0
-push constant 132
+push constant 83
 eq
+push local 0
+push constant 115
+eq
+or
 if-goto IF_TRUE1
 goto IF_FALSE1
 label IF_TRUE1
-push this 2
+push pointer 0
 push constant 1
-call Platform.move 2
+neg
+call Game._changeGameSpeed 2
 pop temp 0
 label IF_FALSE1
 push local 0
@@ -741,10 +849,46 @@ push this 3
 call Ball.unanchor 1
 pop temp 0
 label IF_FALSE3
+push local 1
+push this 9
+gt
+push local 1
+push this 9
+eq
+or
+if-goto IF_TRUE4
+goto IF_FALSE4
+label IF_TRUE4
+push constant 0
+pop local 1
+push local 0
+push constant 130
+eq
+if-goto IF_TRUE5
+goto IF_FALSE5
+label IF_TRUE5
+push this 2
+push constant 1
+neg
+call Platform.move 2
+pop temp 0
+label IF_FALSE5
+push local 0
+push constant 132
+eq
+if-goto IF_TRUE6
+goto IF_FALSE6
+label IF_TRUE6
+push this 2
+push constant 1
+call Platform.move 2
+pop temp 0
+label IF_FALSE6
 push this 3
 push this 2
 call Ball.step 2
 pop temp 0
+label IF_FALSE4
 goto WHILE_EXP0
 label WHILE_END0
 push constant 0

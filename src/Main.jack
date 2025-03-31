@@ -16,14 +16,16 @@ class Main
     {
         var int textX;
         var char key;
+        var String continueString;
 
         let textX = 32 - (message.length() / 2);
+        let continueString = "Press SPACE to continue";
         
         do Screen.clearScreen();
         do Output.moveCursor(9, textX);
         do Output.printString(message);
         do Output.moveCursor(11, 21);
-        do Output.printString("Press SPACE to continue");
+        do Output.printString(continueString);
         do Output.moveCursor(0, 0);
         
         while (~(key = 32))
@@ -31,6 +33,7 @@ class Main
             let key = Keyboard.keyPressed();
         }
 
+        do continueString.dispose();
         do Screen.clearScreen();
         return;
     }
